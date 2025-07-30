@@ -1,0 +1,198 @@
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+
+const MainHero = () => {
+  const heroRef = useRef(null);
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const exploreBtnRef = useRef(null);
+  const scrollIndicatorRef = useRef(null);
+  const [currentHighlightIndex, setCurrentHighlightIndex] = useState(0);
+  const [isMobileView, setIsMobileView] = useState(false);
+  
+  const highlights = [
+    "8 UNESCO World Heritage Sites",
+    "1,600km of Pristine Coastline",
+    "26 National Parks & Wildlife",
+    "2,500+ Years of Rich History",
+    "Legendary Hospitality & Cuisine"
+  ];
+
+  // Check viewport size
+  useEffect(() => {
+    const checkViewport = () => {
+      setIsMobileView(window.innerWidth < 768); // md breakpoint
+    };
+    
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
+  // Highlight rotation effect for mobile
+  useEffect(() => {
+    if (!isMobileView) return;
+
+    const interval = setInterval(() => {
+      setCurrentHighlightIndex((prev) => (prev + 1) % highlights.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isMobileView, highlights.length]);
+
+  // GSAP animations
+  useEffect(() => {
+    if (!titleRef.current || !subtitleRef.current || !exploreBtnRef.current) return;
+
+    gsap.set([titleRef.current, subtitleRef.current, exploreBtnRef.current, scrollIndicatorRef.current], {
+      opacity: 1,
+      y: 0
+    });
+
+    gsap.set([titleRef.current, subtitleRef.current, exploreBtnRef.current], {
+      opacity: 0,
+      y: 30
+    });
+
+    gsap.fromTo(heroRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 1 }
+    );
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    
+    tl.to(titleRef.current, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      delay: 0.3 
+    })
+    .to(subtitleRef.current, {
+      y: 0,
+      opacity: 1,
+      duration: 0.7
+    }, "-=0.3")
+    .to(exploreBtnRef.current, {
+      y: 0,
+      opacity: 1,
+      duration: 0.6
+    }, "-=0.2");
+
+    if (!isMobileView) {
+      tl.to(".highlight-item", {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.15
+      }, "-=0.1");
+    }
+
+    tl.to(scrollIndicatorRef.current, {
+      y: 0,
+      opacity: 1,
+      duration: 0.4
+    }, "-=0.1");
+
+    const arrow = scrollIndicatorRef.current?.querySelector('.arrow');
+    if (arrow) {
+      gsap.to(arrow, {
+        y: 5,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+    }
+
+    return () => {
+      tl.kill();
+      gsap.killTweensOf(arrow);
+    };
+  }, [isMobileView]);
+
+  return (
+    <section 
+      ref={heroRef}
+      className="relative w-full h-screen bg-[url('../public/mountains.jpg')] bg-cover bg-center bg-no-repeat"
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20 z-0"></div>
+
+      <div className="w-full h-full flex flex-col items-center justify-center text-center px-4 z-10 pt-16 sm:pt-0">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 2xl:max-w-5xl">
+          <h1
+            ref={titleRef}
+            className="text-[32px] xs:text-[38px] sm:text-[48px] md:text-[56px] lg:text-[64px] xl:text-[72px] font-bold text-white mb-3 xs:mb-4 sm:mb-5 md:mb-6 font-['Poppins'] leading-tight"
+          >
+            <span className="text-amber-400">ABC Travels</span> Experience Sri Lanka
+          </h1>
+          
+          <p
+            ref={subtitleRef}
+            className="text-[16px] xs:text-[18px] sm:text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] text-white mb-4 xs:mb-5 sm:mb-6 md:mb-8 font-['Poppins'] px-2 sm:px-4"
+          >
+            Where ancient culture meets tropical paradise
+          </p>
+
+          {/* Highlights Section */}
+          <div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8 min-h-[32px] xs:min-h-[36px] sm:min-h-[40px] flex items-center justify-center">
+            {isMobileView ? (
+              <div 
+                key={currentHighlightIndex}
+                className="highlight-item px-3 py-1.5 xs:px-4 xs:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[12px] xs:text-[14px] sm:text-[16px]"
+              >
+                {highlights[currentHighlightIndex]}
+              </div>
+            ) : (
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
+                {highlights.map((highlight, index) => (
+                  <div 
+                    key={index}
+                    className="highlight-item px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[12px] xs:text-[14px] sm:text-[16px] whitespace-nowrap"
+                  >
+                    {highlight}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 xs:gap-4 justify-center">
+            <button
+              ref={exploreBtnRef}
+              className="px-5 py-2.5 xs:px-6 xs:py-3 sm:px-7 sm:py-3.5 md:px-8 md:py-4 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-full transition-all hover:scale-105 shadow-lg flex items-center gap-2 mx-auto group text-[14px] xs:text-[16px] sm:text-[18px]"
+            >
+              Explore Sri Lanka
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div 
+        ref={scrollIndicatorRef}
+        className="absolute bottom-4 xs:bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+      >
+        <div className="flex flex-col items-center">
+          <span className="text-white text-[12px] xs:text-[14px] mb-1 xs:mb-2">Scroll to Discover</span>
+          <div className="w-5 h-8 xs:w-6 xs:h-9 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="arrow w-1 h-2 xs:h-2.5 sm:h-3 bg-white mt-1 xs:mt-1.5 sm:mt-2 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default MainHero;

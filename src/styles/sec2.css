@@ -1,0 +1,15 @@
+.welcome_bg {
+  background-image: url('../../public/srilanka-welcome.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 4px 6px rgba(53, 103, 141, 0.1);
+  opacity: 0.1;
+  width: 100%;
+  height: 100%;
+}
+
+@font-face {
+  font-family: 'Merienda';
+  src: url('../assets/fonts/Merienda-Regular.ttf') format('truetype');
+}

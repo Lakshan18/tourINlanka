@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Cultural Tour",
+    "description": "Immerse yourself in Sri Lanka's rich cultural heritage with visits to ancient cities, temples, and UNESCO World Heritage sites.",
+    "duration": "5 Days",
+    "highlights": [
+      "Sigiriya Rock Fortress",
+      "Dambulla Cave Temple",
+      "Ancient City of Anuradhapura",
+      "Sacred Temple of the Tooth Relic",
+      "Traditional Kandyan Dance Show"
+    ],
+    "icon": "https://cdn-icons-png.flaticon.com/512/3132/3132693.png",
+    "key": "cultural_tour"
+  },
+  {
+    "id": 2,
+    "title": "ECO Tour",
+    "description": "Experience Sri Lanka's breathtaking natural beauty while supporting sustainable tourism and conservation efforts.",
+    "duration": "4 Days",
+    "highlights": [
+      "Sinharaja Rainforest Exploration",
+      "Organic Tea Plantation Visit",
+      "Village Homestay Experience",
+      "Bird Watching in Wetlands",
+      "Eco-friendly Beach Cleanup"
+    ],
+    "icon": "https://cdn-icons-png.flaticon.com/512/4849/4849878.png",
+    "key": "eco_tour"
+  },
+  {
+    "id": 3,
+    "title": "Wildlife Tours",
+    "description": "Embark on thrilling safaris to witness Sri Lanka's incredible biodiversity and majestic wildlife in their natural habitats.",
+    "duration": "3 Days",
+    "highlights": [
+      "Yala National Park Safari",
+      "Udawalawe Elephant Gathering",
+      "Whale Watching in Mirissa",
+      "Bird Sanctuary Visit",
+      "Night Safari Experience"
+    ],
+    "icon": "https://cdn-icons-png.flaticon.com/512/6169/6169852.png",
+    "key": "wildlife_tour"
+  },
+  {
+    "id": 4,
+    "title": "Family Tour",
+    "description": "Create unforgettable family memories with kid-friendly activities and comfortable travel experiences across Sri Lanka.",
+    "duration": "4 Days",
+    "highlights": [
+      "Pinnawala Elephant Orphanage",
+      "Turtle Hatchery Visit",
+      "Spice Garden Tour",
+      "Beach Picnic Activities",
+      "Child-friendly Cultural Shows"
+    ],
+    "icon": "https://cdn-icons-png.flaticon.com/512/477/477103.png",
+    "key": "family_tour"
+  },
+  {
+    "id": 5,
+    "title": "Heritage Tour",
+    "description": "Discover Sri Lanka's fascinating historical legacy through its ancient cities, colonial architecture, and living traditions.",
+    "duration": "4 Days",
+    "highlights": [
+      "Polonnaruwa Ancient City",
+      "Galle Dutch Fort",
+      "Anuradhapura Sacred Sites",
+      "Colombo Heritage Walk",
+      "Traditional Craft Villages"
+    ],
+    "icon": "https://cdn-icons-png.flaticon.com/512/3132/3132693.png",
+    "key": "heritage_tour"
+  },
+  {
+    "id": 6,
+    "title": "Sri Lanka Round Tour",
+    "description": "The ultimate comprehensive journey covering all highlights of Sri Lanka from cultural sites to natural wonders.",
+    "duration": "7 Days",
+    "highlights": [
+      "Cultural Triangle Exploration",
+      "Hill Country Train Journey",
+      "Southern Beaches Relaxation",
+      "Wildlife Safari Experience",
+      "Local Market Visits"
+    ],
+    "icon": "https://cdn-icons-png.flaticon.com/512/854/854878.png",
+    "key": "round_tour"
+  }
+]
