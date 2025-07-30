@@ -6,14 +6,12 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        'xs': { min: '270px', max: '319.99px' },
-        'sm': { min: '320px', max: '599.99px' },
-        'smd': { min: '600px', max: '767.99px' },
-        'md': { min: '768px', max: '991.99px' },
-        'lg': { min: '992px', max: '1191.99px' },
-        'xl': { min: '1192px', max: '1367.99px' },
-        '2xl': { min: '1368px', max: '1599.99px' },
-        '3xl': { min: '1600px' },
+        'xs': { max: '424px' },                  // Small phones
+        'sm': { min: '425px', max: '767px' },    // Large phones
+        'md': { min: '768px', max: '1023px' },   // Tablets
+        'lg': { min: '1024px', max: '1365px' },  // Standard laptops
+        'xl': { min: '1366px', max: '1919px' },  // Large laptops/desktops
+        '2xl': { min: '1920px' }                 // Large monitors
       },
     },
   },

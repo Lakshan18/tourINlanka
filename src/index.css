@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('./assets/fonts/Quicksand-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Rosario';
+    src: url('./assets/fonts/Rosario-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Rubik";
+    src: url('./assets/fonts/Rubik-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Marienda";
+    src: url('./assets/fonts/Merienda-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Agbalu";
+    src: url('./assets/fonts/Agbalumo-Regular.ttf') format('truetype');
+}

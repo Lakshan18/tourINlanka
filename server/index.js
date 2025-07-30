@@ -8,8 +8,7 @@ const app = express();
 // Middleware
 app.use(cors({
     origin: [
-      'http://localhost:5173',
-      'https://tourism-web-react.vercel.app/'
+      'http://localhost:3000',
     ]
 }));
 app.use(express.json());

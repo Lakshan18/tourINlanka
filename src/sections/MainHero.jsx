@@ -9,7 +9,7 @@ const MainHero = () => {
   const scrollIndicatorRef = useRef(null);
   const [currentHighlightIndex, setCurrentHighlightIndex] = useState(0);
   const [isMobileView, setIsMobileView] = useState(false);
-  
+
   const highlights = [
     "8 UNESCO World Heritage Sites",
     "1,600km of Pristine Coastline",
@@ -23,10 +23,10 @@ const MainHero = () => {
     const checkViewport = () => {
       setIsMobileView(window.innerWidth < 768); // md breakpoint
     };
-    
+
     checkViewport();
     window.addEventListener('resize', checkViewport);
-    
+
     return () => window.removeEventListener('resize', checkViewport);
   }, []);
 
@@ -61,23 +61,23 @@ const MainHero = () => {
     );
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    
+
     tl.to(titleRef.current, {
       y: 0,
       opacity: 1,
       duration: 0.8,
-      delay: 0.3 
+      delay: 0.3
     })
-    .to(subtitleRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 0.7
-    }, "-=0.3")
-    .to(exploreBtnRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 0.6
-    }, "-=0.2");
+      .to(subtitleRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.7
+      }, "-=0.3")
+      .to(exploreBtnRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.6
+      }, "-=0.2");
 
     if (!isMobileView) {
       tl.to(".highlight-item", {
@@ -112,21 +112,30 @@ const MainHero = () => {
   }, [isMobileView]);
 
   return (
-    <section 
+    <section
       ref={heroRef}
       className="relative w-full h-screen bg-[url('../public/mountains.jpg')] bg-cover bg-center bg-no-repeat"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20 z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/35 to-black/45 z-0"></div>
 
-      <div className="w-full h-full flex flex-col items-center justify-center text-center px-4 z-10 pt-16 sm:pt-0">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 2xl:max-w-5xl">
-          <h1
+      <div className="w-full absolute h-full flex flex-col items-center justify-center text-center px-4 z-10 pt-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center"
             ref={titleRef}
-            className="text-[32px] xs:text-[38px] sm:text-[48px] md:text-[56px] lg:text-[64px] xl:text-[72px] font-bold text-white mb-3 xs:mb-4 sm:mb-5 md:mb-6 font-['Poppins'] leading-tight"
           >
-            <span className="text-amber-400">ABC Travels</span> Experience Sri Lanka
-          </h1>
-          
+            <div className="flex flex-row items-center w-fit h-auto gap-5">
+              <span className="text-cyan-300 text-[66px] font-semibold font-[Marienda]">TripLanka</span>
+              <span className="text-white font-[Marienda] font-semibold text-[66px]">Experience</span>
+            </div>
+            <span
+              className="text-[32px] xs:text-[38px] sm:text-[48px] mt-4 text-white md:text-[46px] lg:text-[52px] xl:text-[66px] font-bold mb-3 xs:mb-4 sm:mb-5 md:mb-6 font-['Rosario'] leading-tight"
+            >
+              Sri Lanka
+            </span>
+          </div>
+
+          {/* <span className="text-white font-[Agbalu] xl:text-[50px]">TripLanka</span> */}
+
           <p
             ref={subtitleRef}
             className="text-[16px] xs:text-[18px] sm:text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] text-white mb-4 xs:mb-5 sm:mb-6 md:mb-8 font-['Poppins'] px-2 sm:px-4"
@@ -137,7 +146,7 @@ const MainHero = () => {
           {/* Highlights Section */}
           <div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8 min-h-[32px] xs:min-h-[36px] sm:min-h-[40px] flex items-center justify-center">
             {isMobileView ? (
-              <div 
+              <div
                 key={currentHighlightIndex}
                 className="highlight-item px-3 py-1.5 xs:px-4 xs:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[12px] xs:text-[14px] sm:text-[16px]"
               >
@@ -146,7 +155,7 @@ const MainHero = () => {
             ) : (
               <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
                 {highlights.map((highlight, index) => (
-                  <div 
+                  <div
                     key={index}
                     className="highlight-item px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[12px] xs:text-[14px] sm:text-[16px] whitespace-nowrap"
                   >
@@ -180,7 +189,7 @@ const MainHero = () => {
         </div>
       </div>
 
-      <div 
+      <div
         ref={scrollIndicatorRef}
         className="absolute bottom-4 xs:bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10"
       >
