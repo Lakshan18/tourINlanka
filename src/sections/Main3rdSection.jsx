@@ -4,26 +4,13 @@ import { useRef, useState, useEffect } from 'react';
 import { getActivityImages } from '../util/imageFinder.js';
 import activitiesData from '../data/activities.json';
 
-// Animation variants for different rows
 const rowAnimations = {
-  firstRow: {
+  container: {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-        delayChildren: 0.3,
-        when: "beforeChildren"
-      }
-    }
-  },
-  secondRow: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.6,
         when: "beforeChildren"
       }
     }
@@ -31,7 +18,6 @@ const rowAnimations = {
 };
 
 const cardAnimations = {
-  // First row animations
   tween: {
     hidden: { opacity: 0, y: 40, scale: 0.9 },
     visible: {
@@ -58,8 +44,6 @@ const cardAnimations = {
       }
     }
   },
-
-  // Second row animations
   slide: {
     hidden: { opacity: 0, x: -80 },
     visible: {
@@ -102,10 +86,6 @@ const Main3rdSection = () => {
   const [currentImageIndices, setCurrentImageIndices] = useState({});
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  // Split activities into two rows
-  const firstRow = activities.slice(0, Math.ceil(activities.length / 2));
-  const secondRow = activities.slice(Math.ceil(activities.length / 2));
-
   useEffect(() => {
     const loadActivityImages = async () => {
       const loadedActivities = await Promise.all(
@@ -115,7 +95,7 @@ const Main3rdSection = () => {
         })
       );
       setActivities(loadedActivities);
-      
+
       const indices = {};
       activitiesData.forEach((_, index) => {
         indices[index] = 0;
@@ -142,9 +122,16 @@ const Main3rdSection = () => {
     return () => intervals.forEach(interval => clearInterval(interval));
   }, [hasLoaded, activities]);
 
+  const getAnimationType = (index) => {
+    if (index % 4 === 0) return 'tween';
+    if (index % 4 === 1) return 'bounce';
+    if (index % 4 === 2) return 'slide';
+    return 'wave';
+  };
+
   return (
     <section ref={sectionRef} className="pt-5 pb-20 bg-white">
-      <div className="container mx-auto px-6">
+      <div className="mx-auto px-6 w-full">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -154,22 +141,21 @@ const Main3rdSection = () => {
           <h2 className={`${style.mainTitleText} mb-6`}>
             Best Activities to do in Sri Lanka
           </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className={`${style.sectionSubText} xl:max-w-4xl sm:max-w-[500px] xs:max-w-[320px] mx-auto tracking-wider`}>
             Discover unforgettable experiences that showcase Sri Lanka's diverse culture and natural beauty
           </p>
         </motion.div>
 
-        {/* First Row - Tween and Bounce effects */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6"
-          variants={rowAnimations.firstRow}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6"
+          variants={rowAnimations.container}
           initial="hidden"
           animate={isInView && hasLoaded ? "visible" : "hidden"}
         >
-          {firstRow.map((activity, index) => (
+          {activities.map((activity, index) => (
             <motion.div
               key={activity.id}
-              variants={index % 2 === 0 ? cardAnimations.tween : cardAnimations.bounce}
+              variants={cardAnimations[getAnimationType(index)]}
               whileHover={{ y: -8, scale: 1.02 }}
               className="relative h-80 rounded-xl overflow-hidden shadow-lg"
             >
@@ -193,8 +179,13 @@ const Main3rdSection = () => {
                   ))}
                 </AnimatePresence>
               </div>
-              
-              <div className={`absolute inset-0 bg-gradient-to-b ${activity.color}`} />
+
+              <div
+                className={`absolute inset-0 bg-gradient-to-b ${activity.color}`}
+                style={{
+                  mixBlendMode: 'multiply'
+                }}
+              />
 
               <motion.div
                 className="relative h-full flex flex-col justify-end p-6 text-white"
@@ -202,69 +193,12 @@ const Main3rdSection = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.4, duration: 0.6 }}
               >
-                <h3 className="text-2xl font-bold mb-2">{activity.title}</h3>
-                <p className="mb-4">{activity.description}</p>
+                <h3 className={`${style.cardTitleText} mb-2`}>{activity.title}</h3>
+                <p className={`${style.cardDefineAreaText} mb-4`}>{activity.description}</p>
                 <motion.button
                   whileHover={{ x: 5 }}
                   whileTap={{ scale: 0.95 }}
-                  className="self-start px-4 py-2 bg-white text-gray-800 rounded-full text-sm font-medium shadow-sm"
-                >
-                  Learn More →
-                </motion.button>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Second Row - Slide and Wave effects */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={rowAnimations.secondRow}
-          initial="hidden"
-          animate={isInView && hasLoaded ? "visible" : "hidden"}
-        >
-          {secondRow.map((activity, index) => (
-            <motion.div
-              key={activity.id}
-              variants={index % 2 === 0 ? cardAnimations.slide : cardAnimations.wave}
-              whileHover={{ y: -8, scale: 1.02 }}
-              className="relative h-80 rounded-xl overflow-hidden shadow-lg"
-            >
-              <div className="absolute inset-0">
-                <AnimatePresence mode="wait">
-                  {[1, 2, 3].map((i) => (
-                    currentImageIndices[index + firstRow.length] === i - 1 && (
-                      <motion.div
-                        key={`${activity.id}-${i}`}
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{
-                          backgroundImage: `url(${activity.images?.[`image${i}`] || '/images/placeholder-bg.jpg'})`
-                        }}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        variants={imageVariants}
-                        transition={{ duration: 1.2 }}
-                      />
-                    )
-                  ))}
-                </AnimatePresence>
-              </div>
-              
-              <div className={`absolute inset-0 bg-gradient-to-b ${activity.color}`} />
-
-              <motion.div
-                className="relative h-full flex flex-col justify-end p-6 text-white"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4, duration: 0.6 }}
-              >
-                <h3 className="text-2xl font-bold mb-2">{activity.title}</h3>
-                <p className="mb-4">{activity.description}</p>
-                <motion.button
-                  whileHover={{ x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="self-start px-4 py-2 bg-white text-gray-800 rounded-full text-sm font-medium shadow-sm"
+                  className="self-start px-4 py-2 bg-gradient-to-r from-cyan-600 to-cyan-700 text-white rounded-full text-sm font-medium shadow-sm"
                 >
                   Learn More →
                 </motion.button>

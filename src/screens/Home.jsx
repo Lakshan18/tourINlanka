@@ -12,12 +12,12 @@ import Footer from '../components/Footer.jsx';
 const Home = () => {
     return (
         <div className="relative">
-            <div className="relative h-screen">
+            <div className="relative md:h-[105vh] h-screen xs:h-[90vh]">
                 <MainHero />
                 <NavBar />
             </div>
 
-            <div className="relative z-10 bg-white">
+            <div className="relative z-10">
                 <Main2ndSection />
             </div>
             <MainCarousel />

@@ -114,21 +114,21 @@ const MainHero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative w-full h-screen bg-[url('../public/mountains.jpg')] bg-cover bg-center bg-no-repeat"
+      className="relative w-full h-full bg-[url('../public/mountains.jpg')] bg-cover bg-center bg-no-repeat"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black/35 to-black/45 z-0"></div>
 
-      <div className="w-full absolute h-full flex flex-col items-center justify-center text-center px-4 z-10 pt-16">
+      <div className="w-full absolute h-full flex flex-col items-center justify-center text-center px-4 z-10 pt-16 md:pt-10 xs:pt-4">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center"
             ref={titleRef}
           >
-            <div className="flex flex-row items-center w-fit h-auto gap-5">
-              <span className="text-cyan-300 text-[66px] font-semibold font-[Marienda]">TripLanka</span>
-              <span className="text-white font-[Marienda] font-semibold text-[66px]">Experience</span>
+            <div className="flex flex-row items-center w-fit h-auto gap-5 sm:gap-3 xs:gap-2">
+              <span className="text-cyan-300 xl:text-[66px] lg:text-[50px] md:text-[48px] sm:text-[32px] xs:text-[24px] font-semibold font-[Marienda]">TripLanka</span>
+              <span className="text-white font-[Marienda] font-semibold xl:text-[66px] md:text-[48px] sm:text-[32px] xs:text-[24px] lg:text-[50px]">Experience</span>
             </div>
             <span
-              className="text-[32px] xs:text-[38px] sm:text-[48px] mt-4 text-white md:text-[46px] lg:text-[52px] xl:text-[66px] font-bold mb-3 xs:mb-4 sm:mb-5 md:mb-6 font-['Rosario'] leading-tight"
+              className="text-[32px] mt-4 text-white md:text-[48px] sm:text-[32px] lg:text-[46px] xs:text-[24px] xl:text-[58px] font-bold mb-3 xs:mb-4 sm:mb-5 md:mb-6 font-['Rosario'] leading-tight"
             >
               Sri Lanka
             </span>
@@ -138,7 +138,7 @@ const MainHero = () => {
 
           <p
             ref={subtitleRef}
-            className="text-[16px] xs:text-[18px] sm:text-[20px] md:text-[24px] lg:text-[28px] xl:text-[32px] text-white mb-4 xs:mb-5 sm:mb-6 md:mb-8 font-['Poppins'] px-2 sm:px-4"
+            className="sm:text-[18px] xs:text-[14px] md:text-[24px] sm:mt-5 lg:text-[22px] xl:text-[26px] text-white mb-4 md:mb-4 xs:mb-5 sm:mb-6 font-['Poppins'] px-2 sm:px-4"
           >
             Where ancient culture meets tropical paradise
           </p>
@@ -148,7 +148,7 @@ const MainHero = () => {
             {isMobileView ? (
               <div
                 key={currentHighlightIndex}
-                className="highlight-item px-3 py-1.5 xs:px-4 xs:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[12px] xs:text-[14px] sm:text-[16px]"
+                className="highlight-item px-3 py-1.5 xs:px-4 xs:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[12px] xs:text-[12px] sm:text-[14px] font-[Poppins]"
               >
                 {highlights[currentHighlightIndex]}
               </div>
@@ -157,7 +157,7 @@ const MainHero = () => {
                 {highlights.map((highlight, index) => (
                   <div
                     key={index}
-                    className="highlight-item px-2 py-1 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[12px] xs:text-[14px] sm:text-[16px] whitespace-nowrap"
+                    className="highlight-item px-2 py-2 xs:px-3 xs:py-1.5 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-white text-[14px] md:text-[13px] font-[Poppins] whitespace-nowrap"
                   >
                     {highlight}
                   </div>
@@ -169,7 +169,7 @@ const MainHero = () => {
           <div className="flex flex-col sm:flex-row gap-3 xs:gap-4 justify-center">
             <button
               ref={exploreBtnRef}
-              className="px-5 py-2.5 xs:px-6 xs:py-3 sm:px-7 sm:py-3.5 md:px-8 md:py-4 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-full transition-all hover:scale-105 shadow-lg flex items-center gap-2 mx-auto group text-[14px] xs:text-[16px] sm:text-[18px]"
+              className="bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-full transition-all hover:scale-105 shadow-lg flex items-center gap-2 mx-auto group xs:text-[12px] sm:text-[14px] lg:text-[16px] text-[18px] sm:py-3 sm:px-4 xs:py-2 xs:px-3 py-2 px-5"
             >
               Explore Sri Lanka
               <svg
@@ -191,11 +191,11 @@ const MainHero = () => {
 
       <div
         ref={scrollIndicatorRef}
-        className="absolute bottom-4 xs:bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+        className="absolute bottom-2 xs:bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10"
       >
         <div className="flex flex-col items-center">
-          <span className="text-white text-[12px] xs:text-[14px] mb-1 xs:mb-2">Scroll to Discover</span>
-          <div className="w-5 h-8 xs:w-6 xs:h-9 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
+          <span className="text-white xs:text-[14px] sm:text-[14px] text-[16px] mb-1 xs:mb-2">Scroll to Discover</span>
+          <div className="w-7 h-10 xs:w-6 xs:h-9 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="arrow w-1 h-2 xs:h-2.5 sm:h-3 bg-white mt-1 xs:mt-1.5 sm:mt-2 rounded-full"></div>
           </div>
         </div>

@@ -457,19 +457,19 @@ const NavBar = () => {
       {/* Mobile Menu Backdrop */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="fixed inset-0 bg-black/50 z-40 flex md:hidden lg:hidden xl:hidden 2xl:hidden"
           onClick={toggleMobileMenu}
         ></div>
       )}
 
       {/* Mobile Sidebar */}
-      <div className={`fixed top-0 left-0 h-full w-64 bg-[#1B2C4A] z-50 transform transition-all duration-300 ease-in-out shadow-xl md:hidden ${
+      <div className={`fixed top-0 left-0 h-full w-64 bg-[#1B2C4A] z-50 transform transition-all duration-300 ease-in-out shadow-xl  md:hidden lg:hidden xl:hidden 2xl:hidden ${
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
-        <div className="flex flex-col h-full pt-20 px-6 space-y-6">
+        <div className="flex flex-col h-full pt-20 px-6 space-y-6 xs:space-y-3">
           <NavLink
             to="/"
-            className={`text-white text-lg py-2 px-4 rounded-lg transition-all ${
+            className={`text-white xs:text-[14px] font-[Rubik] text-lg py-2 px-4 rounded-lg transition-all ${
               activeTab === 'Home' ? 'bg-white/10 font-medium' : 'hover:bg-white/5'
             }`}
             onClick={toggleMobileMenu}
@@ -478,7 +478,7 @@ const NavBar = () => {
           </NavLink>
           <NavLink
             to="/about"
-            className={`text-white text-lg py-2 px-4 rounded-lg transition-all ${
+            className={`text-white xs:text-[14px] font-[Rubik] text-lg py-2 px-4 rounded-lg transition-all ${
               activeTab === 'About Us' ? 'bg-white/10 font-medium' : 'hover:bg-white/5'
             }`}
             onClick={toggleMobileMenu}
@@ -487,7 +487,7 @@ const NavBar = () => {
           </NavLink>
           <NavLink
             to="/packages"
-            className={`text-white text-lg py-2 px-4 rounded-lg transition-all ${
+            className={`text-white xs:text-[14px] font-[Rubik] text-lg py-2 px-4 rounded-lg transition-all ${
               activeTab === 'Packages' ? 'bg-white/10 font-medium' : 'hover:bg-white/5'
             }`}
             onClick={toggleMobileMenu}
@@ -496,7 +496,7 @@ const NavBar = () => {
           </NavLink>
           <NavLink
             to="/blogs"
-            className={`text-white text-lg py-2 px-4 rounded-lg transition-all ${
+            className={`text-white xs:text-[14px] font-[Rubik] text-lg py-2 px-4 rounded-lg transition-all ${
               activeTab === 'Blogs' ? 'bg-white/10 font-medium' : 'hover:bg-white/5'
             }`}
             onClick={toggleMobileMenu}
@@ -513,7 +513,7 @@ const NavBar = () => {
             </span>
             <input
               type="text"
-              className={`${style.SearchInput} pl-10 pr-3 py-2 w-full border border-gray-300 rounded-md bg-white text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-blue-400 shadow-sm`}
+              className={`${style.SearchInput} pl-10 pr-3 py-2 xs:text-[14px] w-full border border-gray-300 rounded-md bg-white text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-blue-400 shadow-sm`}
               placeholder="Search Sri Lanka..."
             />
           </div>
@@ -521,17 +521,17 @@ const NavBar = () => {
       </div>
 
       {/* Main Navbar */}
-      <div className={`fixed top-0 w-full z-50 transition-all ${scrolled ? 'bg-[#1B2C4A]/60 backdrop-blur-sm py-2' : 'bg-transparent py-3'}`}>
-        <div className="w-full py-3 px-6 md:px-12 flex flex-row justify-between items-center">
+      <div className={`fixed top-0 w-full z-50 transition-all ${scrolled ? 'bg-[#1B2C4A]/60 backdrop-blur-sm py-2 xs:py-1' : 'bg-transparent py-3 xs:py-2'}`}>
+        <div className="w-full py-3 px-6 md:px-8 lg:px-12 flex flex-row justify-between items-center">
           <div className='w-fit flex flex-row items-center gap-3'>
             <div className='w-[40px] h-[40px]'>
               <img src="/travel_logo.png" alt="Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="text-[20px] font-light text-white font-['Agbalu']">TripLanka</span>
+            <span className="text-[20px] md:text-[18px] font-light text-white font-['Agbalu']">TripLanka</span>
           </div>
           
           {/* Desktop Navigation */}
-          <div className='flex xs:hidden sm:hidden flex-row items-center text-white xl:gap-12'>
+          <div className='flex xs:hidden sm:hidden flex-row items-center text-white lg:gap-8 xl:gap-12 md:gap-3'>
             <NavLink
               to="/"
               className={`${style.NavLinkText} relative px-3 py-1.5 transition-all duration-300 rounded-lg ${
@@ -540,7 +540,7 @@ const NavBar = () => {
               onMouseEnter={() => activeTab !== 'Home' && setHoveredTab('Home')}
               onMouseLeave={() => setHoveredTab(null)}
             >
-              <span className={`relative z-10 ${activeTab === 'Home' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
+              <span className={`relative z-10 md:text-[13px] ${activeTab === 'Home' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
                 Home
               </span>
               {activeTab === 'Home' ? (
@@ -572,7 +572,7 @@ const NavBar = () => {
               onMouseEnter={() => activeTab !== 'About Us' && setHoveredTab('About Us')}
               onMouseLeave={() => setHoveredTab(null)}
             >
-              <span className={`relative z-10 ${activeTab === 'About Us' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
+              <span className={`relative z-10 md:text-[13px] ${activeTab === 'About Us' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
                 About Us
               </span>
               {activeTab === 'About Us' ? (
@@ -604,7 +604,7 @@ const NavBar = () => {
               onMouseEnter={() => activeTab !== 'Packages' && setHoveredTab('Packages')}
               onMouseLeave={() => setHoveredTab(null)}
             >
-              <span className={`relative z-10 ${activeTab === 'Packages' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
+              <span className={`relative z-10 md:text-[13px] ${activeTab === 'Packages' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
                 Packages
               </span>
               {activeTab === 'Packages' ? (
@@ -636,7 +636,7 @@ const NavBar = () => {
               onMouseEnter={() => activeTab !== 'Blogs' && setHoveredTab('Blogs')}
               onMouseLeave={() => setHoveredTab(null)}
             >
-              <span className={`relative z-10 ${activeTab === 'Blogs' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
+              <span className={`relative z-10 md:text-[13px] ${activeTab === 'Blogs' ? 'text-white font-semibold font-[Quicksand]' : 'text-white/90 font-[Quicksand]'}`}>
                 Blogs
               </span>
               {activeTab === 'Blogs' ? (
@@ -660,7 +660,7 @@ const NavBar = () => {
               )}
             </NavLink>
             
-            <div className='w-fit ps-12'>
+            <div className='w-fit ps-12 md:ps-4'>
               <div className="relative flex items-center">
                 <span className="absolute left-3 text-gray-400">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -670,7 +670,7 @@ const NavBar = () => {
                 </span>
                 <input
                   type="text"
-                  className={`${style.SearchInput} pl-10 pr-3 py-1.5 w-[220px] border border-gray-300 rounded-md bg-white text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-blue-400 shadow-sm`}
+                  className={`pl-10 pr-3 py-1.5 w-[220px] md:w-[190px] md:text-[14px] border border-gray-300 rounded-md bg-white text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-blue-400 shadow-sm`}
                   placeholder="Search Sri Lanka..."
                 />
               </div>
@@ -683,11 +683,11 @@ const NavBar = () => {
             onClick={toggleMobileMenu}
           >
             {mobileMenuOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 xs:w-5 xs:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 xs:w-5 xs:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
