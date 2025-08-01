@@ -79,9 +79,9 @@ const Packages = () => {
         <div className='relative'>
             <NavBar />
 
-            <div className="bg-gradient-to-b bg-gray-500 pb-12 pt-30 px-4 sm:px-6 lg:px-8">
+            <div className="pt-28 bg-gradient-to-b from-slate-700 to-slate-500 pb-12 pt-30 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
-                    {/* Header */}
+
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -89,17 +89,16 @@ const Packages = () => {
                         className="text-center mb-16"
                     >
                         <h1 className={`${style.mainTitleText} text-white`}>Explore Sri Lanka</h1>
-                        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                        <p className={`${style.sectionSubText} text-gray-300 max-w-3xl mx-auto`}>
                             Discover our handcrafted tour packages designed to showcase the best of Sri Lanka
                         </p>
                     </motion.div>
 
-                    {/* Packages Grid */}
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+                        className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 grid-cols-3 gap-8 mb-16"
                     >
                         {packages.map((pkg) => (
                             <motion.div
@@ -128,13 +127,13 @@ const Packages = () => {
                                     )}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
                                         <div>
-                                            <h3 className="text-xl font-bold text-white">{pkg.title}</h3>
-                                            <p className="text-blue-200">{pkg.duration}</p>
+                                            <h3 className={`text-[22px] md:text-[20px] sm:text-[20px] font-[Rubik] font-bold text-white`}>{pkg.title}</h3>
+                                            <p className="text-blue-200 text-[15px]">{pkg.duration}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="p-6">
-                                    <p className="text-gray-600 mb-4 line-clamp-2">{pkg.description}</p>
+                                    <p className="text-gray-600 mb-4 line-clamp-2 text-[15px] md:text-[14px] sm:text-[14px]">{pkg.description}</p>
                                     <div className="flex items-center">
                                         <img
                                             src={pkg.icon}
@@ -151,7 +150,6 @@ const Packages = () => {
                         ))}
                     </motion.div>
 
-                    {/* Package Overview Modal */}
                     <AnimatePresence>
                         {selectedPackage && (
                             <motion.div
@@ -166,7 +164,7 @@ const Packages = () => {
                                     exit={{ scale: 0.95 }}
                                     className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
                                 >
-                                    {/* Package Hero */}
+
                                     <div className="relative h-64 md:h-80 overflow-hidden">
                                         <img
                                             src={selectedPackage.images.main}
@@ -192,7 +190,6 @@ const Packages = () => {
                                         </div>
                                     </div>
 
-                                    {/* Package Content */}
                                     <div className="p-6 md:p-8">
                                         <div className="grid md:grid-cols-3 gap-8">
                                             <div className="md:col-span-2">

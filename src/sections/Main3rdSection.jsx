@@ -2,7 +2,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { style } from "../style.js";
 import { useRef, useState, useEffect } from 'react';
 import { getActivityImages } from '../util/imageFinder.js';
-import activitiesData from '../data/activities.json';
+// import activitiesData from '../data/activities.json';
 
 const rowAnimations = {
   container: {
@@ -16,6 +16,51 @@ const rowAnimations = {
     }
   }
 };
+
+const activitiesData = [
+   {
+    "id": 1,
+    "key": "wildlife",
+    "title": "Wildlife Safaris",
+    "description": "Spot leopards & elephants in Yala and Udawalawe national parks",
+    "color": "from-amber-900/50 to-amber-700/50"
+  },
+  {
+    "id": 2,
+    "key": "temple",
+    "title": "Ancient Temple Exploration",
+    "description": "Discover 2000+ year old Buddhist temples and cave paintings",
+    "color": "from-stone-900/50 to-stone-700/50"
+  },
+  {
+    "id": 3,
+    "key": "tea",
+    "title": "Tea Plantation Tours",
+    "description": "Walk through emerald green tea estates in Nuwara Eliya",
+    "color": "from-green-900/50 to-green-700/50"
+  },
+  {
+    "id": 4,
+    "key": "beach",
+    "title": "Beach Relaxation",
+    "description": "Unwind on pristine golden beaches along the southern coast",
+    "color": "from-blue-900/50 to-blue-700/50"
+  },
+  {
+    "id": 5,
+    "key": "spice",
+    "title": "Spice Garden Visits",
+    "description": "Learn about cinnamon, pepper and other native spices",
+    "color": "from-red-900/50 to-red-700/50"
+  },
+  {
+    "id": 6,
+    "key": "train",
+    "title": "Train Journeys",
+    "description": "Experience the famous Kandy to Ella scenic train ride",
+    "color": "from-purple-900/50 to-purple-700/50"
+  }
+];
 
 const cardAnimations = {
   tween: {

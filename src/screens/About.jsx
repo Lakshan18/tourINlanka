@@ -16,9 +16,9 @@ const About = () => {
             <NavBar />
             <div className="min-h-screen bg-gradient-to-b bg-gray-50">
                 {/* Hero Section with Sri Lanka image */}
-                <div className="relative h-[70vh] overflow-hidden">
+                <div className="relative h-[80vh] overflow-hidden">
                     <img
-                        src="../public/images/bg_about.jpg"
+                        src="/images/about_bg.jpg"
                         alt="Sri Lanka Landscape"
                         className="w-full h-full object-cover opacity-70"
                     />
@@ -29,8 +29,8 @@ const About = () => {
                             transition={{ duration: 1 }}
                             className="text-center text-white px-4"
                         >
-                            <h1 className={`${style.mainTitleText} text-white`}>About ABC Travels</h1>
-                            <p className="text-xl max-w-2xl mx-auto">
+                            <h1 className={`${style.mainTitleText} text-white`}>About TripLanka Travels</h1>
+                            <p className={`${style.sectionSubText} text-gray-100 pt-2 max-w-2xl mx-auto`}>
                                 Your trusted guide to Sri Lanka's wonders since 2016
                             </p>
                             <BiLeaf className="mx-auto mt-4 text-3xl text-emerald-300" />
@@ -47,14 +47,14 @@ const About = () => {
                         variants={fadeIn}
                         className="mb-20"
                     >
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div className="grid grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-12 items-center">
                             <div className='flex flex-col items-start justify-center'>
-                                <h2 className="text-4xl font-bold text-cyan-800 mb-6 font-[Rosario]">Our Sri Lankan Journey</h2>
+                                <h2 className="text-[30px] font-bold text-cyan-800 mb-6 font-[Rosario]">Our Sri Lankan Journey</h2>
                                 <div>
-                                    <p className="text-lg text-gray-700 mb-6">
+                                    <p className="text-[17px] xs:text-[15px] text-gray-700 mb-6">
                                         Founded in 2016, ABC Travels began as a small family-run business in Colombo with a passion for sharing Sri Lanka's hidden gems. What started with just three employees offering local tours has grown into one of Sri Lanka's most trusted travel agencies.
                                     </p>
-                                    <p className="text-lg text-gray-700">
+                                    <p className="text-[17px] xs:text-[15px] text-gray-700">
                                         We specialize in authentic experiences - from tea plantation stays in Nuwara Eliya to leopard safaris in Yala, and everything in between.
                                     </p>
                                 </div>
@@ -77,8 +77,8 @@ const About = () => {
                         variants={fadeIn}
                         className="mb-20"
                     >
-                        <h2 className="text-4xl font-bold text-cyan-800 mb-12 text-center font-[Roboto]">Why Travel With Us</h2>
-                        <div className="grid md:grid-cols-3 gap-8">
+                        <h2 className="text-[34px] md:text-[28px] sm:text-[24px] xs:text-[22px] font-bold text-cyan-800 mb-12 text-center font-[Roboto]">Why Travel With Us</h2>
+                        <div className="grid grid-cols-3 xs:grid-cols-1 sm:grid-cols-1 gap-8">
                             {[
                                 {
                                     icon: "🌿",
@@ -103,8 +103,8 @@ const About = () => {
                                     className="bg-white p-8 rounded-xl shadow-md text-center"
                                 >
                                     <span className="text-4xl mb-4 block">{item.icon}</span>
-                                    <h3 className="text-xl font-semibold text-cyan-700 mb-3">{item.title}</h3>
-                                    <p className="text-gray-600">{item.desc}</p>
+                                    <h3 className="text-[20px] font-[Roboto] md:text-[19px] sm:text-[17px] xs:text-[16px] font-semibold text-cyan-700 mb-3">{item.title}</h3>
+                                    <p className="text-gray-600 font-[Quicksand] text-[16px] md:text-[15px] sm:text-[13px] xs:text-[13px]">{item.desc}</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -118,7 +118,7 @@ const About = () => {
                         viewport={{ once: true }}
                         className="bg-cyan-800 text-white rounded-2xl p-12 mb-20"
                     >
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <div className="grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-2 gap-8 text-center">
                             {[
                                 { number: "9+", label: "Years Experience" },
                                 { number: "1,000+", label: "Happy Travelers" },
@@ -126,8 +126,8 @@ const About = () => {
                                 { number: "100%", label: "Sri Lankan Team" }
                             ].map((stat, index) => (
                                 <div key={index}>
-                                    <div className="text-5xl font-bold mb-2">{stat.number}</div>
-                                    <div className="text-cyan-200">{stat.label}</div>
+                                    <div className="text-[40px] font-[Roboto] font-bold mb-2">{stat.number}</div>
+                                    <div className="text-cyan-200 font-[Roboto] text-[17px] md:text-[16px] sm:text-[16px] xs:text-[16px]">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
@@ -141,44 +141,44 @@ const About = () => {
                         variants={fadeIn}
                         className="bg-white rounded-2xl shadow-xl overflow-hidden"
                     >
-                        <div className="grid md:grid-cols-2">
+                        <div className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1">
                             {/* Contact Info */}
                             <div className="bg-cyan-700 text-white p-12">
-                                <h2 className="text-3xl font-bold mb-8">Contact ABC Travels</h2>
+                                <h2 className="font-bold mb-8 text-[30px] xs:text-[28px] font-[Roboto]">Contact TripLanka</h2>
 
                                 <div className="space-y-6">
                                     <div className="flex items-start">
                                         <FaPhone className="text-cyan-300 mt-1 mr-4" />
                                         <div>
-                                            <h3 className="font-semibold">Phone (Sri Lanka)</h3>
-                                            <p className="text-cyan-200">+94 76 123 4567</p>
+                                            <h3 className="font-semibold text-[17px]">Phone (Sri Lanka)</h3>
+                                            <p className="text-cyan-200 text-[16px]">+94 76 123 4567</p>
                                         </div>
                                     </div>
 
                                     <div className="flex items-start">
                                         <FaEnvelope className="text-cyan-300 mt-1 mr-4" />
                                         <div>
-                                            <h3 className="font-semibold">Email</h3>
-                                            <p className="text-cyan-200">bookings@abctravels.lk</p>
+                                            <h3 className="font-semibold text-[17px]">Email</h3>
+                                            <p className="text-cyan-200 text-[16px]">bookings@abctravels.lk</p>
                                         </div>
                                     </div>
 
                                     <div className="flex items-start">
                                         <FaMapMarkerAlt className="text-cyan-300 mt-1 mr-4" />
                                         <div>
-                                            <h3 className="font-semibold">Office</h3>
-                                            <p className="text-cyan-200">123 Galle Road, Colombo 03, Sri Lanka</p>
+                                            <h3 className="font-semibold text-[17px]">Office</h3>
+                                            <p className="text-cyan-200 text-[16px]">123 Galle Road, Colombo 03, Sri Lanka</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="mt-12">
-                                    <h3 className="font-semibold mb-4">TripAdvisor Reviews</h3>
+                                    <h3 className="font-semibold mb-4 text-[17px]">TripAdvisor Reviews</h3>
                                     <a
                                         href="/"
                                         className="inline-flex items-center text-cyan-300 hover:text-white"
                                     >
-                                        <FaTripadvisor className="mr-2 text-xl" />
+                                        <FaTripadvisor className="mr-2 text-[15px]" />
                                         Read our 500+ 5-star reviews
                                     </a>
                                 </div>

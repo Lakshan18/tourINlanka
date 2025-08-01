@@ -124,7 +124,7 @@ const Main7thSection = () => {
                                     boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
                                 }}
                             >
-                                <div className="flex-1 flex flex-col md:flex-row gap-8">
+                                <div className="flex-1 flex flex-row sm:flex-col xs:flex-col gap-8">
                                     <div className="w-full md:w-1/3 flex flex-col items-center">
                                         <div className="relative mb-6">
                                             <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-cyan-100">

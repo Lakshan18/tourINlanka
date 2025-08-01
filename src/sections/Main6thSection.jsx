@@ -24,7 +24,7 @@ const Main6thSection = () => {
   setIsSubmitting(true);
 
   try {
-    const response = await fetch('http://localhost:3001/api/send-email', {
+    const response = await fetch('/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -78,7 +78,7 @@ const Main6thSection = () => {
   };
 
   return (
-    <section className="relative py-15 overflow-hidden">
+    <section className="relative py-14 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 z-0">
         {/* Main background image */}
@@ -98,7 +98,7 @@ const Main6thSection = () => {
           <h2 className={`${style.mainTitleText} mb-6`}>
             Plan Your Sri Lankan Adventure
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto font-medium">
+          <p className={`${style.sectionSubText} text-slate-700 font-medium mx-auto`}>
             Let us craft your perfect itinerary. Share your details and we'll create a personalized travel experience.
           </p>
         </motion.div>
@@ -120,7 +120,7 @@ const Main6thSection = () => {
             {/* Floating decorative element */}
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-[url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1889&q=80')] bg-cover bg-center rounded-full opacity-20" />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div className="grid xs:grid-cols-1 sm:grid-cols-1 grid-cols-2 gap-6 mb-8">
               <motion.div variants={itemVariants}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
@@ -236,7 +236,7 @@ const Main6thSection = () => {
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-center justify-between gap-4"
+              className="flex xs:flex-col sm:flex-col flex-row items-center justify-between gap-4"
             >
               <p className="text-sm text-gray-600 font-medium">
                 We'll respond within 24 hours with a customized proposal

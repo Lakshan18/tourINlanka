@@ -5,18 +5,15 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-white pt-16 pb-8 px-6 relative overflow-hidden">
-            {/* Decorative elements */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1889&q=80')] bg-cover bg-center"></div>
             </div>
 
-            {/* Cyan accent elements */}
             <div className="absolute -top-20 -left-20 w-64 h-64 bg-cyan-500 rounded-full filter blur-3xl opacity-20"></div>
             <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-cyan-400 rounded-full filter blur-3xl opacity-15"></div>
 
             <div className="container mx-auto relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                    {/* About Section */}
+                <div className="grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1 gap-12 md:gap-8 mb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -24,9 +21,9 @@ const Footer = () => {
                         viewport={{ once: true }}
                         className="space-y-4"
                     >
-                        <h3 className={`${style.mainTitleText} text-xl font-bold text-cyan-400 mb-4`}>Serendipity</h3>
-                        <p className="text-gray-300">Crafting unforgettable Sri Lankan journeys since 2015. We specialize in authentic, personalized travel experiences.</p>
-                        <div className="flex space-x-4">
+                        <h3 className={`${style.mainTitleText} font-bold text-cyan-400 mb-8 md:mb-3`}>TripLanka</h3>
+                        <p className="text-gray-300 font-[Quicksand] text-[15px]">Crafting unforgettable Sri Lankan journeys since 2015. We specialize in authentic, personalized travel experiences.</p>
+                        <div className="flex space-x-4 flex-row">
                             {[
                                 {
                                     name: 'facebook',
@@ -70,15 +67,14 @@ const Footer = () => {
                         </div>
                     </motion.div>
 
-                    {/* Quick Links */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                         viewport={{ once: true }}
-                        className="space-y-4"
+                        className="space-y-4 md:ps-6"
                     >
-                        <h3 className="text-lg font-bold text-gray-100 mb-4">Explore</h3>
+                        <h3 className="md:text-[14px] font-bold text-gray-100 mb-4 text-[16px] font-[Poppins]">Explore</h3>
                         <nav className="space-y-2">
                             {[
                                 { name: 'Home', path: '/' },
@@ -86,12 +82,12 @@ const Footer = () => {
                                 { name: 'Destinations', path: '/destinations' },
                                 { name: 'Activities', path: '/activities' },
                                 { name: 'About Us', path: '/about' },
-                                { name: 'Contact', path: '/contact' }
+                                { name: 'Contact', path: '/contact'}
                             ].map((item) => (
                                 <Link 
                                     key={item.name}
                                     to={item.path}
-                                    className="block text-gray-400 hover:text-cyan-400 transition-colors"
+                                    className="block text-[15px] text-gray-400 hover:text-cyan-400 transition-colors font-[Roboto]"
                                 >
                                     {item.name}
                                 </Link>
@@ -107,26 +103,26 @@ const Footer = () => {
                         viewport={{ once: true }}
                         className="space-y-4"
                     >
-                        <h3 className="text-lg font-bold text-gray-100 mb-4">Contact Us</h3>
+                        <h3 className="md:text-[14px] font-bold text-gray-100 text-[16px] mb-4 font-[Poppins]">Contact Us</h3>
                         <div className="space-y-3">
                             <div className="flex items-start space-x-3">
                                 <svg className="h-5 w-5 text-cyan-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
-                                <span className="text-gray-400">123 Galle Road, Colombo 03, Sri Lanka</span>
+                                <span className="text-gray-400 text-[15px] font-[Roboto]">123 Galle Road, Colombo 03, Sri Lanka</span>
                             </div>
                             <div className="flex items-center space-x-3">
                                 <svg className="h-5 w-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
-                                <span className="text-gray-400">+94 11 234 5678</span>
+                                <span className="text-gray-400 text-[15px] font-[Roboto]">+94 11 234 5678</span>
                             </div>
                             <div className="flex items-center space-x-3">
                                 <svg className="h-5 w-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
-                                <span className="text-gray-400">hello@serendipity.lk</span>
+                                <span className="text-gray-400 text-[15px] font-[Roboto]">hello@serendipity.lk</span>
                             </div>
                         </div>
                     </motion.div>
@@ -139,20 +135,26 @@ const Footer = () => {
                         viewport={{ once: true }}
                         className="space-y-4"
                     >
-                        <h3 className="text-lg font-bold text-gray-100 mb-4">Popular Destinations</h3>
+                        <h3 className="md:text-[14px] font-bold text-gray-100 mb-4 text-[16px] font-[Poppins]">Popular Destinations</h3>
                         <div className="grid grid-cols-2 gap-3">
                             {[
-                                { name: 'Colombo', path: '/destinations/colombo' },
-                                { name: 'Kandy', path: '/destinations/kandy' },
-                                { name: 'Galle', path: '/destinations/galle' },
-                                { name: 'Sigiriya', path: '/destinations/sigiriya' },
-                                { name: 'Nuwara Eliya', path: '/destinations/nuwara-eliya' },
-                                { name: 'Yala', path: '/destinations/yala' }
+                                // { name: 'Colombo', path: '/destinations/colombo' },
+                                // { name: 'Kandy', path: '/destinations/kandy' },
+                                // { name: 'Galle', path: '/destinations/galle' },
+                                // { name: 'Sigiriya', path: '/destinations/sigiriya' },
+                                // { name: 'Nuwara Eliya', path: '/destinations/nuwara-eliya' },
+                                // { name: 'Yala', path: '/destinations/yala' }
+                                { name: 'Colombo', path: '/' },
+                                { name: 'Kandy', path: '/' },
+                                { name: 'Galle', path: '/' },
+                                { name: 'Sigiriya', path: '/' },
+                                { name: 'Nuwara Eliya', path: '/' },
+                                { name: 'Yala', path: '/' }
                             ].map((destination) => (
                                 <Link
                                     key={destination.name}
                                     to={destination.path}
-                                    className="text-gray-400 hover:text-cyan-400 transition-colors flex items-center"
+                                    className="text-gray-400 text-[15px] font-[Roboto] hover:text-cyan-400 transition-colors flex items-center"
                                 >
                                     <svg className="h-4 w-4 mr-2 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -171,9 +173,9 @@ const Footer = () => {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="pt-8 mt-8 border-t border-gray-800 text-center text-gray-500 text-sm"
+                    className="pt-8 mt-8 border-t border-gray-800 text-center text-[13px] font-normal font-[Quicksand] text-gray-500 text-sm"
                 >
-                    <div className="flex flex-col md:flex-row justify-between items-center">
+                    <div className="flex flex-row xs:flex-col sm:flex-col justify-between items-center">
                         <p>© {new Date().getFullYear()} Serendipity Travels. All rights reserved.</p>
                         <div className="flex space-x-6 mt-4 md:mt-0">
                             <Link to="/privacy-policy" className="hover:text-cyan-400 transition-colors">Privacy Policy</Link>
