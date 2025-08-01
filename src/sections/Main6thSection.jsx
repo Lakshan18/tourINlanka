@@ -250,8 +250,9 @@ const Main6thSection = () => {
             <motion.div variants={itemVariants} className="mb-6">
               <ReCAPTCHA
                 ref={recaptchaRef}
-                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY || '6LeoNZcrAAAAABLrwSjgK9712YNmR-mwqNggcpoA'}
                 onChange={handleRecaptchaChange}
+                size={isMobile ? 'compact' : 'normal'}
               />
             </motion.div>
 

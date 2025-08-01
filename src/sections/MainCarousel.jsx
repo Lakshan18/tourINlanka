@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import '../styles/caraousel.css';
 import destinationsData from '../data/destinations.json';
 import { getDestinationImages } from '../util/imageFinder.js';
@@ -15,7 +15,7 @@ const MainCarousel = () => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -34,7 +34,7 @@ const MainCarousel = () => {
     loadDestinations();
   }, []);
 
-  const startAutoSlide = () => {
+  const startAutoSlide = useCallback(() => {
     if (destinations.length === 0) return;
 
     clearInterval(intervalRef.current);
@@ -45,12 +45,18 @@ const MainCarousel = () => {
         setTransition(false);
       }, isMobile ? 300 : 500);
     }, 4000);
-  };
+
+    return () => clearInterval(intervalRef.current);
+  }, [destinations.length, isMobile]);
 
   useEffect(() => {
-    startAutoSlide();
-    return () => clearInterval(intervalRef.current);
-  }, [currentIndex, destinations.length, isMobile]);
+    const autoSlide = startAutoSlide();
+    return () => {
+      if (autoSlide && typeof autoSlide === 'function') {
+        autoSlide(); // Cleanup
+      }
+    };
+  }, [currentIndex, destinations.length, isMobile, startAutoSlide]);
 
   const handleDotClick = (index) => {
     clearInterval(intervalRef.current);
