@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { style } from "../style.js";
-// import { getTourPackageImages } from "../util/imageFinder.js";
-// import tourPackagesData from "../data/tour_packages.json";
 import tourPackagesData from '../data/tour_packages.json';
 import { getTourPackageImages } from '../util/imageFinder.js';
 
@@ -40,10 +38,8 @@ const Main4thSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [tourPackages, setTourPackages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const controls = useAnimation();
   const intervalRef = useRef(null);
 
-  // Load tour data with images
   useEffect(() => {
     const loadTourData = async () => {
       setIsLoading(true);
@@ -65,7 +61,6 @@ const Main4thSection = () => {
     loadTourData();
   }, []);
 
-  // Auto-rotate testimonials
   useEffect(() => {
     if (tourPackages.length === 0) return;
 
@@ -120,7 +115,6 @@ const Main4thSection = () => {
         </h2>
 
         <div className="flex flex-col lg:flex-row xl:flex-row 2xl:flex-row md:flex-row gap-8 pb-8">
-          {/* Left Column - Content */}
           <div className="lg:w-1/2 xl:w-1/2 2xl:w-1/2 md:w-1/2 flex flex-col md:items-start md:ps-10 xl:ps-12 2xl:ps-14 justify-center items-center">
             <AnimatePresence mode="wait">
               <motion.div
@@ -161,7 +155,6 @@ const Main4thSection = () => {
             </AnimatePresence>
           </div>
 
-          {/* Right Column - Vertical Wheel Slider */}
           <div
             className="lg:w-1/2 xl:w-1/2 2xl:w-1/2 md:w-1/2 h-[500px] flex items-center justify-center"
             onMouseEnter={handleHoverStart}

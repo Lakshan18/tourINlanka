@@ -95,7 +95,6 @@ const Footer = () => {
                         </nav>
                     </motion.div>
 
-                    {/* Contact Info */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -127,7 +126,6 @@ const Footer = () => {
                         </div>
                     </motion.div>
 
-                    {/* Popular Destinations */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -167,7 +165,6 @@ const Footer = () => {
                     </motion.div>
                 </div>
 
-                {/* Copyright */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}

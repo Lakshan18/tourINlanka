@@ -39,7 +39,6 @@ const Main7thSection = () => {
     const testimonialRef = useRef(null);
     const intervalRef = useRef(null);
 
-    // Auto-rotate testimonials
     useEffect(() => {
         intervalRef.current = setInterval(() => {
             setCurrentIndex(prev => (prev + 1) % testimonials.length);
@@ -48,7 +47,6 @@ const Main7thSection = () => {
         return () => clearInterval(intervalRef.current);
     }, []);
 
-    // Animation when index changes
     useEffect(() => {
         controls.start({
             opacity: [0, 1],
@@ -75,7 +73,6 @@ const Main7thSection = () => {
 
     return (
         <section className="relative py-20 bg-white overflow-hidden">
-            {/* Decorative background elements */}
             <div className="absolute inset-0 opacity-10">
                 <div
                     className="absolute top-0 left-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1562613521-9e9c8b16d1e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')] 
@@ -83,7 +80,6 @@ const Main7thSection = () => {
                 />
             </div>
 
-            {/* Floating elements */}
             <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-purple-200 blur-3xl"></div>
             <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-red-200 blur-3xl"></div>
             <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-cyan-200 blur-3xl"></div>
@@ -106,7 +102,6 @@ const Main7thSection = () => {
                 </motion.div>
 
                 <div className="max-w-5xl mx-auto relative">
-                    {/* Testimonial Cards */}
                     <div className="relative h-96">
                         {testimonials.map((testimonial, index) => (
                             <motion.div
@@ -160,7 +155,6 @@ const Main7thSection = () => {
                         ))}
                     </div>
 
-                    {/* Navigation Arrows */}
                     <button
                         onClick={handlePrev}
                         className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 bg-white hover:bg-gray-50 rounded-full w-10 h-10 flex items-center justify-center text-gray-700 shadow-md transition-all z-20 border border-gray-200"
@@ -178,7 +172,6 @@ const Main7thSection = () => {
                         </svg>
                     </button>
 
-                    {/* Dots indicator */}
                     <div className="flex justify-center mt-8 gap-2">
                         {testimonials.map((_, index) => (
                             <button

@@ -18,10 +18,9 @@ const MainHero = () => {
     "Legendary Hospitality & Cuisine"
   ];
 
-  // Check viewport size
   useEffect(() => {
     const checkViewport = () => {
-      setIsMobileView(window.innerWidth < 768); // md breakpoint
+      setIsMobileView(window.innerWidth < 768);
     };
 
     checkViewport();
@@ -30,7 +29,6 @@ const MainHero = () => {
     return () => window.removeEventListener('resize', checkViewport);
   }, []);
 
-  // Highlight rotation effect for mobile
   useEffect(() => {
     if (!isMobileView) return;
 
@@ -41,7 +39,6 @@ const MainHero = () => {
     return () => clearInterval(interval);
   }, [isMobileView, highlights.length]);
 
-  // GSAP animations
   useEffect(() => {
     if (!titleRef.current || !subtitleRef.current || !exploreBtnRef.current) return;
 
@@ -133,9 +130,6 @@ const MainHero = () => {
               Sri Lanka
             </span>
           </div>
-
-          {/* <span className="text-white font-[Agbalu] xl:text-[50px]">TripLanka</span> */}
-
           <p
             ref={subtitleRef}
             className="sm:text-[18px] xs:text-[14px] md:text-[24px] sm:mt-5 lg:text-[22px] xl:text-[26px] text-white mb-4 md:mb-4 xs:mb-5 sm:mb-6 font-['Poppins'] px-2 sm:px-4"
@@ -143,7 +137,6 @@ const MainHero = () => {
             Where ancient culture meets tropical paradise
           </p>
 
-          {/* Highlights Section */}
           <div className="mb-4 xs:mb-5 sm:mb-6 md:mb-8 min-h-[32px] xs:min-h-[36px] sm:min-h-[40px] flex items-center justify-center">
             {isMobileView ? (
               <div

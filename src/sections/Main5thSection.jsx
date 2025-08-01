@@ -55,7 +55,6 @@ const itemVariants = {
 const Main5thSection = () => {
   return (
     <section className="pt-10  pb-15 bg-gradient-to-br bg-white relative overflow-hidden">
-      {/* Decorative elements */}
       <motion.div 
         className="absolute top-1/4 -left-20 w-96 h-96 rounded-full bg-teal-200/20 blur-3xl"
         initial={{ scale: 0.8, opacity: 0 }}
@@ -108,7 +107,6 @@ const Main5thSection = () => {
           ))}
         </motion.div>
 
-        {/* Visual divider */}
         <motion.div
           className="mt-20 mb-16 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"
           initial={{ scaleX: 0 }}
@@ -117,7 +115,6 @@ const Main5thSection = () => {
           viewport={{ once: true }}
         />
 
-        {/* Value statement */}
         <motion.div
           className="max-w-4xl mx-auto text-center"
           initial={{ opacity: 0 }}

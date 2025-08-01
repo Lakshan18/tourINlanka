@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { style } from "../style.js";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Main6thSection = () => {
   const [formData, setFormData] = useState({
@@ -13,45 +14,62 @@ const Main6thSection = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const recaptchaRef = useRef();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+  };
+
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
-
-  try {
-    const response = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || 'Failed to send');
+    e.preventDefault();
+    
+    if (!recaptchaToken) {
+      alert("Please complete the reCAPTCHA verification!");
+      return;
     }
 
-    setSubmitSuccess(true);
-    setFormData({
-      name: '',
-      email: '',
-      mobile: '',
-      travelers: '1-2',
-      message: ''
-    });
-  } catch (error) {
-    console.error('Error:', error);
-    alert(error.message); // Show error to user
-  } finally {
-    setIsSubmitting(false);
-    setTimeout(() => setSubmitSuccess(false), 3000);
-  }
-};
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('http://localhost:3002/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send');
+      }
+
+      setSubmitSuccess(true);
+      setFormData({
+        name: '',
+        email: '',
+        mobile: '',
+        travelers: '1-2',
+        message: ''
+      });
+      recaptchaRef.current.reset();
+      setRecaptchaToken(null);
+    } catch (error) {
+      console.error('Error:', error);
+      alert(error.message);
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitSuccess(false), 3000);
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -79,12 +97,8 @@ const Main6thSection = () => {
 
   return (
     <section className="relative py-14 overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 z-0">
-        {/* Main background image */}
-        <div 
-          className="absolute inset-0 bg-[url('../public/bg_city_form.jpg')] bg-cover bg-center opacity-30"
-        />
+        <div className="absolute inset-0 bg-[url('../public/bg_city_form.jpg')] bg-cover bg-center opacity-30" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -110,16 +124,11 @@ const Main6thSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20"
         >
-          {/* Decorative header */}
-          <motion.div 
-            variants={itemVariants}
-            className="h-3 bg-gradient-to-r from-amber-400 via-teal-400 to-blue-500"
-          />
+          <motion.div variants={itemVariants} className="h-3 bg-gradient-to-r from-amber-400 via-teal-400 to-blue-500" />
 
           <form onSubmit={handleSubmit} className="p-8 md:p-10 relative">
-            {/* Floating decorative element */}
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-[url('https://images.unsplash.com/photo-1566438480900-0609be27a4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1889&q=80')] bg-cover bg-center rounded-full opacity-20" />
-            
+
             <div className="grid xs:grid-cols-1 sm:grid-cols-1 grid-cols-2 gap-6 mb-8">
               <motion.div variants={itemVariants}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -234,6 +243,14 @@ const Main6thSection = () => {
               </div>
             </motion.div>
 
+            <motion.div variants={itemVariants} className="mb-6">
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={"6LeoNZcrAAAAABLrwSjgK9712YNmR-mwqNggcpoA"}
+                onChange={handleRecaptchaChange}
+              />
+            </motion.div>
+
             <motion.div
               variants={itemVariants}
               className="flex xs:flex-col sm:flex-col flex-row items-center justify-between gap-4"
@@ -241,7 +258,7 @@ const Main6thSection = () => {
               <p className="text-sm text-gray-600 font-medium">
                 We'll respond within 24 hours with a customized proposal
               </p>
-              
+
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.03 }}

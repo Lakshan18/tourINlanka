@@ -15,7 +15,6 @@ const About = () => {
         <div className='relative'>
             <NavBar />
             <div className="min-h-screen bg-gradient-to-b bg-gray-50">
-                {/* Hero Section with Sri Lanka image */}
                 <div className="relative h-[80vh] overflow-hidden">
                     <img
                         src="/images/about_bg.jpg"
@@ -38,7 +37,6 @@ const About = () => {
                     </div>
                 </div>
 
-                {/* Our Story */}
                 <div className="max-w-7xl mx-auto px-6 py-16">
                     <motion.div
                         initial="hidden"
@@ -69,7 +67,6 @@ const About = () => {
                         </div>
                     </motion.div>
 
-                    {/* Why Choose Us */}
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
@@ -110,7 +107,6 @@ const About = () => {
                         </div>
                     </motion.div>
 
-                    {/* Stats */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -133,7 +129,6 @@ const About = () => {
                         </div>
                     </motion.div>
 
-                    {/* Contact Section */}
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
@@ -142,7 +137,6 @@ const About = () => {
                         className="bg-white rounded-2xl shadow-xl overflow-hidden"
                     >
                         <div className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1">
-                            {/* Contact Info */}
                             <div className="bg-cyan-700 text-white p-12">
                                 <h2 className="font-bold mb-8 text-[30px] xs:text-[28px] font-[Roboto]">Contact TripLanka</h2>
 
@@ -184,7 +178,6 @@ const About = () => {
                                 </div>
                             </div>
 
-                            {/* Contact Form */}
                             <div className="p-12">
                                 <h3 className="text-2xl font-semibold text-gray-800 mb-6">Plan Your Sri Lanka Adventure</h3>
                                 <form className="space-y-6">
