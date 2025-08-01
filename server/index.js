@@ -5,19 +5,48 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 
+const allowedOrigins = [
+    'https://trip-lanka.vercel.app',
+    'http://localhost:3000'
+];
+
+// app.use(cors({
+//     origin: [
+//         'https://trip-lanka.vercel.app/',
+//     ],
+//     credentials: true
+// }));
+// app.use(express.json());
+
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-    ],
-    credentials: true
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+app.options('*', cors());
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
@@ -26,20 +55,20 @@ app.post('/api/send-email', async (req, res) => {
 
     try {
         const recaptchaUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
-        
+
         const recaptchaResponse = await fetch(recaptchaUrl, {
             method: 'POST'
         });
         const recaptchaData = await recaptchaResponse.json();
 
         if (!recaptchaData.success) {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 error: 'reCAPTCHA verification failed',
-                errors: [{ 
-                    type: 'field', 
-                    msg: 'reCAPTCHA verification failed', 
-                    path: 'recaptcha', 
-                    location: 'body' 
+                errors: [{
+                    type: 'field',
+                    msg: 'reCAPTCHA verification failed',
+                    path: 'recaptcha',
+                    location: 'body'
                 }]
             });
         }
@@ -105,6 +134,10 @@ app.post('/api/send-email', async (req, res) => {
         console.error('Error:', error);
         res.status(500).json({ error: 'Failed to send email' });
     }
+});
+
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
 });
 
 const PORT = process.env.PORT || 3002;

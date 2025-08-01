@@ -17,6 +17,10 @@ const Main6thSection = () => {
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const recaptchaRef = useRef();
 
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -28,7 +32,7 @@ const Main6thSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!recaptchaToken) {
       alert("Please complete the reCAPTCHA verification!");
       return;
@@ -37,7 +41,7 @@ const Main6thSection = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:3002/api/send-email', {
+      const response = await fetch(`${API_BASE_URL}/send-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
