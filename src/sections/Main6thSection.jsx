@@ -60,24 +60,18 @@ const Main6thSection = () => {
       })
     });
 
-    // First check if the response is OK (status 200-299)
+    // Handle the response only once
+    const responseData = await response.json().catch(async () => {
+      // If JSON parsing fails, try to get text instead
+      const text = await response.text();
+      return { error: text };
+    });
+
     if (!response.ok) {
-      // Try to parse the error response as JSON
-      let errorResponse;
-      try {
-        errorResponse = await response.json();
-      } catch (jsonError) {
-        // If JSON parsing fails, get the text response
-        const textResponse = await response.text();
-        throw new Error(textResponse || 'Request failed');
-      }
-      throw new Error(errorResponse.error || 'Request failed');
+      throw new Error(responseData.error || 'Request failed');
     }
 
-    // If response is OK, parse the JSON
-    await response.json(); // We don't need the data but should still parse it
-
-    // Reset form on success
+    // Success case
     setFormData({
       name: '',
       email: '',
