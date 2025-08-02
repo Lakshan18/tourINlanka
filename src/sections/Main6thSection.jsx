@@ -16,16 +16,16 @@ const Main6thSection = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const recaptchaRef = useRef();
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  // useEffect(() => {
+  //   const checkMobile = () => {
+  //     setIsMobile(window.innerWidth <= 768);
+  //   };
+  //   checkMobile();
+  //   window.addEventListener('resize', checkMobile);
+  //   return () => window.removeEventListener('resize', checkMobile);
+  // }, []);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
