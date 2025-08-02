@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer');
 const app = express();
 
 const allowedOrigins = [
+    'https://trip-lanka.vercel.app',
     'http://localhost:3000'
 ];
 
@@ -136,7 +137,7 @@ app.post('/api/send-email', async (req, res) => {
 });
 
 app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'healthy' });
+    res.status(200).json({ status: 'healthy' });
 });
 
 const PORT = process.env.PORT || 3002;
