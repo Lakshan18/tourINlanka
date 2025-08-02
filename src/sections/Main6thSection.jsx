@@ -41,49 +41,63 @@ const Main6thSection = () => {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!recaptchaToken) {
-        alert("Please complete the reCAPTCHA verification!");
-        return;
+  if (!recaptchaToken) {
+    alert("Please complete the reCAPTCHA verification!");
+    return;
+  }
+
+  setIsSubmitting(true);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/send-email`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...formData,
+        recaptchaToken
+      })
+    });
+
+    // First check if the response is OK (status 200-299)
+    if (!response.ok) {
+      // Try to parse the error response as JSON
+      let errorResponse;
+      try {
+        errorResponse = await response.json();
+      } catch (jsonError) {
+        // If JSON parsing fails, get the text response
+        const textResponse = await response.text();
+        throw new Error(textResponse || 'Request failed');
+      }
+      throw new Error(errorResponse.error || 'Request failed');
     }
 
-    setIsSubmitting(true);
+    // If response is OK, parse the JSON
+    await response.json(); // We don't need the data but should still parse it
 
-    try {
-        const response = await fetch(`${API_BASE_URL}/send-email`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ...formData,
-                recaptchaToken
-            })
-        });
+    // Reset form on success
+    setFormData({
+      name: '',
+      email: '',
+      mobile: '',
+      travelers: '1-2',
+      message: ''
+    });
+    recaptchaRef.current.reset();
+    setRecaptchaToken(null);
+    setSubmitSuccess(true);
 
-        // First check if response is OK
-        if (!response.ok) {
-            // Try to parse error as JSON, fallback to text
-            let errorData;
-            try {
-                errorData = await response.json();
-            } catch {
-                errorData = { error: await response.text() };
-            }
-            throw new Error(errorData.error || 'Request failed');
-        }
-
-        // Then parse the successful response
-        const data = await response.json();
-
-        setSubmitSuccess(true);
-        resetForm();
-
-    } catch (error) {
-        console.error('Submission Error:', error);
-        alert(`Submission failed: ${error.message}`);
-    } finally {
-        setIsSubmitting(false);
+  } catch (error) {
+    console.error('Submission Error:', error);
+    alert(`Submission failed: ${error.message || 'Unknown error occurred'}`);
+  } finally {
+    setIsSubmitting(false);
+    if (submitSuccess) {
+      setTimeout(() => setSubmitSuccess(false), 3000);
     }
+  }
 };
 
   // const handleSubmit = async (e) => {
