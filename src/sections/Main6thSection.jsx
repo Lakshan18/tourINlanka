@@ -39,50 +39,97 @@ const Main6thSection = () => {
     setRecaptchaToken(token);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!recaptchaToken) {
-      alert("Please complete the reCAPTCHA verification!");
-      return;
+        alert("Please complete the reCAPTCHA verification!");
+        return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/send-email`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          recaptchaToken
-        })
-      });
+        const response = await fetch(`${API_BASE_URL}/send-email`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...formData,
+                recaptchaToken
+            })
+        });
 
-      const data = await response.json();
+        // First check if response is OK
+        if (!response.ok) {
+            // Try to parse error as JSON, fallback to text
+            let errorData;
+            try {
+                errorData = await response.json();
+            } catch {
+                errorData = { error: await response.text() };
+            }
+            throw new Error(errorData.error || 'Request failed');
+        }
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send');
-      }
+        // Then parse the successful response
+        const data = await response.json();
 
-      setSubmitSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        mobile: '',
-        travelers: '1-2',
-        message: ''
-      });
-      recaptchaRef.current.reset();
-      setRecaptchaToken(null);
+        setSubmitSuccess(true);
+        resetForm();
+
     } catch (error) {
-      console.error('Error:', error);
-      alert(error.message);
+        console.error('Submission Error:', error);
+        alert(`Submission failed: ${error.message}`);
     } finally {
-      setIsSubmitting(false);
-      setTimeout(() => setSubmitSuccess(false), 3000);
+        setIsSubmitting(false);
     }
-  };
+};
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!recaptchaToken) {
+  //     alert("Please complete the reCAPTCHA verification!");
+  //     return;
+  //   }
+
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/send-email`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         ...formData,
+  //         recaptchaToken
+  //       })
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (!response.ok) {
+  //       throw new Error(data.error || 'Failed to send');
+  //     }
+
+  //     setSubmitSuccess(true);
+  //     setFormData({
+  //       name: '',
+  //       email: '',
+  //       mobile: '',
+  //       travelers: '1-2',
+  //       message: ''
+  //     });
+  //     recaptchaRef.current.reset();
+  //     setRecaptchaToken(null);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     alert(error.message);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //     setTimeout(() => setSubmitSuccess(false), 3000);
+  //   }
+  // };
 
   const containerVariants = {
     hidden: { opacity: 0 },
