@@ -90,7 +90,8 @@ const Main6thSection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitError(null); // Clear any previous errors
+    setSubmitError(null);
+    setSubmitSuccess(false);
 
     if (!recaptchaToken) {
       setSubmitError("Please complete the reCAPTCHA verification!");
@@ -126,6 +127,10 @@ const Main6thSection = () => {
       recaptchaRef.current.reset();
       setRecaptchaToken(null);
       setSubmitSuccess(true);
+
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 5000);
 
     } catch (error) {
       console.error('Submission Error:', error);
@@ -401,6 +406,7 @@ const Main6thSection = () => {
             <AnimatePresence>
               {submitSuccess && (
                 <motion.div
+                  key="success-message"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
@@ -415,6 +421,7 @@ const Main6thSection = () => {
 
               {submitError && (
                 <motion.div
+                  key="error-message"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}

@@ -82,9 +82,9 @@ const Footer = () => {
                                 { name: 'Destinations', path: '/destinations' },
                                 { name: 'Activities', path: '/activities' },
                                 { name: 'About Us', path: '/about' },
-                                { name: 'Contact', path: '/contact'}
+                                { name: 'Contact', path: '/contact' }
                             ].map((item) => (
-                                <Link 
+                                <Link
                                     key={item.name}
                                     to={item.path}
                                     className="block text-[15px] text-gray-400 hover:text-cyan-400 transition-colors font-[Roboto]"
@@ -170,11 +170,13 @@ const Footer = () => {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8 }}
                     viewport={{ once: true }}
-                    className="pt-8 mt-8 border-t border-gray-800 text-center text-[13px] font-normal font-[Quicksand] text-gray-500 text-sm"
+                    className="pt-8 mt-8 border-t border-gray-800 text-center text-[13px] font-normal font-[Quicksand] text-gray-400 text-sm"
                 >
                     <div className="flex flex-row xs:flex-col sm:flex-col justify-between items-center">
-                        <p>© {new Date().getFullYear()} Serendipity Travels. All rights reserved.</p>
-                        <div className="flex space-x-6 mt-4 md:mt-0">
+                        <p className="text-[12px]">Developed By <p className="text-[13px]">Quantom Blaze Software Solutions</p></p>
+                        <p className="text-[13px]">© {new Date().getFullYear()} TripLanka Travels. All rights reserved.</p>
+
+                        <div className="flex text-[13px] space-x-6 mt-4 md:mt-0">
                             <Link to="/privacy-policy" className="hover:text-cyan-400 transition-colors">Privacy Policy</Link>
                             <Link to="/terms" className="hover:text-cyan-400 transition-colors">Terms of Service</Link>
                             <Link to="/sitemap" className="hover:text-cyan-400 transition-colors">Sitemap</Link>

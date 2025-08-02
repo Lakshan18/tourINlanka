@@ -199,7 +199,7 @@ app.post('/api/send-email', async (req, res) => {
                 <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
                 <div style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
                     <h1 style="color: white; margin: 0; font-size: 28px;">NEW TRAVEL INQUIRY</h1>
-                    <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0; font-size: 16px;">ABC Travels - Sri Lanka</p>
+                    <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0; font-size: 16px;">TripLanka Travels - Sri Lanka</p>
                 </div>
                 <div style="padding: 30px; background: #fff; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
                     <div style="margin-bottom: 25px;">
@@ -241,7 +241,7 @@ app.post('/api/send-email', async (req, res) => {
                 </div>
                 <div style="text-align: center; margin-top: 20px; color: #6b7280; font-size: 12px;">
                     <p>This inquiry was submitted from your website contact form.</p>
-                    <p>© ${new Date().getFullYear()} ABC Travels. All rights reserved.</p>
+                    <p>© ${new Date().getFullYear()} TripLanka Travels. All rights reserved.</p>
                 </div>
                 </div>
             `
