@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { style } from "../style.js";
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Main6thSection = () => {
