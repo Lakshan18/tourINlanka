@@ -14,6 +14,7 @@ const Main6thSection = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const recaptchaRef = useRef();
   // const [isMobile, setIsMobile] = useState(false);
@@ -40,51 +41,104 @@ const Main6thSection = () => {
   };
 
 
+  //   const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!recaptchaToken) {
+  //     alert("Please complete the reCAPTCHA verification!");
+  //     return;
+  //   }
+
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/send-email`, {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         ...formData,
+  //         recaptchaToken
+  //       })
+  //     });
+
+  //     const result = await response.json();
+
+  //     if (!response.ok) {
+  //       throw new Error(result.error || 'Request failed');
+  //     }
+
+  //     // Success case
+  //     setFormData({
+  //       name: '',
+  //       email: '',
+  //       mobile: '',
+  //       travelers: '1-2',
+  //       message: ''
+  //     });
+  //     recaptchaRef.current.reset();
+  //     setRecaptchaToken(null);
+  //     setSubmitSuccess(true);
+
+  //   } catch (error) {
+  //     console.error('Submission Error:', error);
+  //     alert(`Error: ${error.message || 'Something went wrong'}`);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    setSubmitError(null); // Clear any previous errors
 
-  if (!recaptchaToken) {
-    alert("Please complete the reCAPTCHA verification!");
-    return;
-  }
-
-  setIsSubmitting(true);
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/send-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...formData,
-        recaptchaToken
-      })
-    });
-
-    const result = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(result.error || 'Request failed');
+    if (!recaptchaToken) {
+      setSubmitError("Please complete the reCAPTCHA verification!");
+      return;
     }
 
-    // Success case
-    setFormData({
-      name: '',
-      email: '',
-      mobile: '',
-      travelers: '1-2',
-      message: ''
-    });
-    recaptchaRef.current.reset();
-    setRecaptchaToken(null);
-    setSubmitSuccess(true);
-    
-  } catch (error) {
-    console.error('Submission Error:', error);
-    alert(`Error: ${error.message || 'Something went wrong'}`);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/send-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Request failed');
+      }
+
+      // Success case
+      setFormData({
+        name: '',
+        email: '',
+        mobile: '',
+        travelers: '1-2',
+        message: ''
+      });
+      recaptchaRef.current.reset();
+      setRecaptchaToken(null);
+      setSubmitSuccess(true);
+
+    } catch (error) {
+      console.error('Submission Error:', error);
+      setSubmitError(error.message || 'Something went wrong');
+    } finally {
+      setIsSubmitting(false);
+      // Auto-hide success message after 5 seconds
+      if (submitSuccess) {
+        setTimeout(() => setSubmitSuccess(false), 5000);
+      }
+    }
+  };
+
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -350,12 +404,26 @@ const Main6thSection = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg flex items-center"
+                  className="mt-6 p-4 text-[18px] md:text-[16px] xs:text-[14px] sm:text-[14px] bg-green-100 border border-green-400 text-green-700 rounded-lg flex items-center"
                 >
                   <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                   Thank you! Your request has been submitted. We'll contact you shortly.
+                </motion.div>
+              )}
+
+              {submitError && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="mt-6 p-4 text-[18px] md:text-[16px] xs:text-[14px] sm:text-[14px] bg-red-100 border border-red-400 text-red-700 rounded-lg flex items-center"
+                >
+                  <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {submitError}
                 </motion.div>
               )}
             </AnimatePresence>
