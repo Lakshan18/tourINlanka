@@ -16,7 +16,16 @@ const Main6thSection = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const recaptchaRef = useRef();
+  const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -250,9 +259,9 @@ const Main6thSection = () => {
             <motion.div variants={itemVariants} className="mb-6">
               <ReCAPTCHA
                 ref={recaptchaRef}
-                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY || '6LeoNZcrAAAAABLrwSjgK9712YNmR-mwqNggcpoA'}
+                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                 onChange={handleRecaptchaChange}
-                size={isMobile ? 'compact' : 'normal'}
+                size="normal"
               />
             </motion.div>
 
