@@ -6,7 +6,6 @@ const nodemailer = require('nodemailer');
 const app = express();
 
 const allowedOrigins = [
-    'https://trip-lanka.vercel.app',
     'http://localhost:3000'
 ];
 
