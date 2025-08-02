@@ -60,28 +60,34 @@ const Main6thSection = () => {
       })
     });
 
-    // Handle the response only once
-    const responseData = await response.json().catch(async () => {
-      // If JSON parsing fails, try to get text instead
-      const text = await response.text();
-      return { error: text };
-    });
+    // Clone the response to read it multiple times if needed
+    const responseClone = response.clone();
+    
+    // First try to parse as JSON
+    try {
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Request failed');
+      }
 
-    if (!response.ok) {
-      throw new Error(responseData.error || 'Request failed');
+      // Success case
+      setFormData({
+        name: '',
+        email: '',
+        mobile: '',
+        travelers: '1-2',
+        message: ''
+      });
+      recaptchaRef.current.reset();
+      setRecaptchaToken(null);
+      setSubmitSuccess(true);
+      
+    } catch (jsonError) {
+      // If JSON parsing fails, try as text
+      const text = await responseClone.text();
+      throw new Error(text || 'Request failed');
     }
-
-    // Success case
-    setFormData({
-      name: '',
-      email: '',
-      mobile: '',
-      travelers: '1-2',
-      message: ''
-    });
-    recaptchaRef.current.reset();
-    setRecaptchaToken(null);
-    setSubmitSuccess(true);
 
   } catch (error) {
     console.error('Submission Error:', error);
