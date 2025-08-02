@@ -2,7 +2,7 @@ import Home from './screens/Home.jsx';
 import About from './screens/About.jsx';
 import Blog from './screens/Blog.jsx';
 import Packages from './screens/Packages.jsx';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, HashRouter as Router, Routes } from 'react-router-dom';
 
 function App() {
   return (
