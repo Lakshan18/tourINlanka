@@ -7,7 +7,7 @@ const app = express();
 
 // Simple CORS setup
 app.use(cors({
-    origin: ['https://trip-lanka.vercel.app', 'http://localhost:3000']
+    origin: ['https://tourinlanka.vercel.app', 'http://localhost:3000']
 }));
 
 app.use(express.json());
