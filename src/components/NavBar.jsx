@@ -37,7 +37,7 @@ const NavBar = () => {
     if (path === '/') setActiveTab('Home');
     else if (path === '/about') setActiveTab('About Us');
     else if (path === '/packages') setActiveTab('Packages');
-    else if (path === '/blogs') setActiveTab('Blogs');
+    else if (path === '/') setActiveTab('Blogs');
     
     if (windowWidth < 768) {
       setMobileMenuOpen(false);
