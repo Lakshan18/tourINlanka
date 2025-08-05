@@ -2,7 +2,6 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { style } from "../style.js";
 import { useRef, useState, useEffect } from 'react';
 import { getActivityImages } from '../util/imageFinder.js';
-// import activitiesData from '../data/activities.json';
 
 const rowAnimations = {
   container: {
@@ -18,7 +17,7 @@ const rowAnimations = {
 };
 
 const activitiesData = [
-   {
+  {
     "id": 1,
     "key": "wildlife",
     "title": "Wildlife Safaris",
@@ -130,6 +129,8 @@ const Main3rdSection = () => {
   const [activities, setActivities] = useState([]);
   const [currentImageIndices, setCurrentImageIndices] = useState({});
   const [hasLoaded, setHasLoaded] = useState(false);
+  const timeoutRef = useRef(null);
+  // const currentTransitionIndex = useRef(0);
 
   useEffect(() => {
     const loadActivityImages = async () => {
@@ -155,23 +156,40 @@ const Main3rdSection = () => {
   useEffect(() => {
     if (!hasLoaded) return;
 
-    const intervals = activities.map((_, index) => {
-      return setInterval(() => {
-        setCurrentImageIndices(prev => ({
-          ...prev,
-          [index]: (prev[index] + 1) % 3
-        }));
-      }, 3000 + (index * 1000));
-    });
+    const transitionNextCard = () => {
+      // Create shuffled array of card indices
+      const cardIndices = [...Array(activities.length).keys()];
+      for (let i = cardIndices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cardIndices[i], cardIndices[j]] = [cardIndices[j], cardIndices[i]];
+      }
 
-    return () => intervals.forEach(interval => clearInterval(interval));
-  }, [hasLoaded, activities]);
+      // Process each card one by one with 4000ms delay
+      cardIndices.forEach((cardIndex, i) => {
+        timeoutRef.current = setTimeout(() => {
+          setCurrentImageIndices(prev => ({
+            ...prev,
+            [cardIndex]: (prev[cardIndex] + 1) % 2
+          }));
+        }, i * 3000);
+      });
+
+      // Schedule next round after all cards have transitioned
+      const totalTransitionTime = cardIndices.length * 2200;
+      timeoutRef.current = setTimeout(transitionNextCard, totalTransitionTime);
+    };
+
+    // Start the transition cycle
+    transitionNextCard();
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [hasLoaded, activities.length]);
 
   const getAnimationType = (index) => {
-    if (index % 4 === 0) return 'tween';
-    if (index % 4 === 1) return 'bounce';
-    if (index % 4 === 2) return 'slide';
-    return 'wave';
+    const types = ['tween', 'bounce', 'slide', 'wave'];
+    return types[index % types.length];
   };
 
   return (

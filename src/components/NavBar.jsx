@@ -120,7 +120,7 @@ const NavBar = () => {
             <div className='w-[40px] h-[40px]'>
               <img src="/travel_logo.png" alt="Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="text-[20px] md:text-[18px] font-light text-white font-['Agbalu']">TripLanka</span>
+            <span className="text-[20px] md:text-[18px] font-light text-white font-['Agbalu']">TourINlanka</span>
           </div>
           
           <div className='flex xs:hidden sm:hidden flex-row items-center text-white lg:gap-8 xl:gap-12 md:gap-3'>

@@ -121,9 +121,10 @@ const MainHero = () => {
             ref={titleRef}
           >
             <div className="flex flex-row items-center w-fit h-auto gap-5 sm:gap-3 xs:gap-2">
-              <span className="text-cyan-300 xl:text-[66px] lg:text-[50px] md:text-[48px] sm:text-[32px] xs:text-[24px] font-semibold font-[Marienda]">TripLanka</span>
-              <span className="text-white font-[Marienda] font-semibold xl:text-[66px] md:text-[48px] sm:text-[32px] xs:text-[24px] lg:text-[50px]">Experience</span>
+              <span className="text-cyan-300 xl:text-[66px] lg:text-[50px] md:text-[48px] sm:text-[32px] xs:text-[22px] font-semibold font-[Marienda]">TourINlanka</span>
+              <span className="text-white font-[Marienda] font-semibold xl:text-[66px] md:text-[48px] sm:text-[32px] xs:hidden lg:text-[50px]">Experience</span>
             </div>
+            <span className="text-white font-[Marienda] font-semibold  xs:text-[22px] hidden">Experience</span>
             <span
               className="text-[32px] mt-4 text-white md:text-[48px] sm:text-[32px] lg:text-[46px] xs:text-[24px] xl:text-[58px] font-bold mb-3 xs:mb-4 sm:mb-5 md:mb-6 font-['Rosario'] leading-tight"
             >

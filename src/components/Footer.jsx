@@ -21,7 +21,7 @@ const Footer = () => {
                         viewport={{ once: true }}
                         className="space-y-4"
                     >
-                        <h3 className={`${style.mainTitleText} font-bold text-cyan-400 mb-8 md:mb-3`}>TripLanka</h3>
+                        <h3 className={`${style.mainTitleText} font-bold text-cyan-400 mb-8 md:mb-3`}>TourINlanka</h3>
                         <p className="text-gray-300 font-[Quicksand] text-[15px]">Crafting unforgettable Sri Lankan journeys since 2015. We specialize in authentic, personalized travel experiences.</p>
                         <div className="flex space-x-4 flex-row">
                             {[
@@ -174,7 +174,7 @@ const Footer = () => {
                 >
                     <div className="flex flex-row xs:flex-col sm:flex-col justify-between items-center">
                         <p className="text-[12px]">Developed By <p className="text-[13px]">Quantom Blaze Software Solutions</p></p>
-                        <p className="text-[13px]">© {new Date().getFullYear()} TripLanka Travels. All rights reserved.</p>
+                        <p className="text-[13px]">© {new Date().getFullYear()} TourINlanka Travels. All rights reserved.</p>
 
                         <div className="flex text-[13px] space-x-6 mt-4 md:mt-0">
                             <Link to="/privacy-policy" className="hover:text-cyan-400 transition-colors">Privacy Policy</Link>

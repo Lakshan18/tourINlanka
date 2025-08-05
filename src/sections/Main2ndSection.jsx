@@ -8,7 +8,7 @@ const Main2ndSection = () => {
                 <div className='welcome_bg absolute inset-0 z-0 w-full h-full'></div>
 
                 <div className='flex flex-col max-w-3xl lg:max-w-2xl md:max-w-full relative z-10'>
-                    <div className='flex flex-col md:mb-4 sm:mb-4 xs:mb-4'>
+                    <div className='flex flex-col items-center md:mb-4 sm:mb-4 xs:mb-4 px-2'>
                         <h2 className={`${style.mainTitleText} text-center`}>Discover the Beauty of</h2>
                         <h2 className={`${style.mainTitleText} mt-2 text-center`}>Sri Lanka</h2>
                     </div>
@@ -20,7 +20,7 @@ const Main2ndSection = () => {
                         Come not as a traveler, but as a thread woven into its living tapestry. The island is ready to unravel its magic for you."
                     </span>
                 </div>
-                <div className="w-full flex flex-row justify-center">
+                <div className="w-full flex flex-row justify-center xs:hidden">
                     <div className="w-[300px] h-[300px] xl:w-[380px] xl:h-[380px] relative hidden lg:flex xl:flex 2xl:flex">
                         <img src="./images/tour_fam.jpg" className="w-full h-full object-cover rounded-full shadow-gray-700 shadow-2xl" alt="discover srilanka" />
                     </div>
