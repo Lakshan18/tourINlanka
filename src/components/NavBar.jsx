@@ -89,7 +89,7 @@ const NavBar = () => {
             Packages
           </NavLink>
           <NavLink
-            to="/blogs"
+            to="/"
             className={`text-white xs:text-[14px] font-[Rubik] text-lg py-2 px-4 rounded-lg transition-all ${
               activeTab === 'Blogs' ? 'bg-white/10 font-medium' : 'hover:bg-white/5'
             }`}
