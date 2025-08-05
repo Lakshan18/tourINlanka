@@ -37,7 +37,7 @@ const NavBar = () => {
     if (path === '/') setActiveTab('Home');
     else if (path === '/about') setActiveTab('About Us');
     else if (path === '/packages') setActiveTab('Packages');
-    else if (path === '/') setActiveTab('Blogs');
+    else if (path === '/blogs') setActiveTab('Blogs');
     
     if (windowWidth < 768) {
       setMobileMenuOpen(false);
@@ -89,7 +89,7 @@ const NavBar = () => {
             Packages
           </NavLink>
           <NavLink
-            to="/"
+            to="/blogs"
             className={`text-white xs:text-[14px] font-[Rubik] text-lg py-2 px-4 rounded-lg transition-all ${
               activeTab === 'Blogs' ? 'bg-white/10 font-medium' : 'hover:bg-white/5'
             }`}

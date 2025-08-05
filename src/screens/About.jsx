@@ -28,7 +28,7 @@ const About = () => {
                             transition={{ duration: 1 }}
                             className="text-center text-white px-4"
                         >
-                            <h1 className={`${style.mainTitleText} text-white`}>About TripLanka Travels</h1>
+                            <h1 className={`${style.mainTitleText} text-white`}>About TourINlanka Travels</h1>
                             <p className={`${style.sectionSubText} text-gray-100 pt-2 max-w-2xl mx-auto`}>
                                 Your trusted guide to Sri Lanka's wonders since 2016
                             </p>
@@ -50,7 +50,7 @@ const About = () => {
                                 <h2 className="text-[30px] font-bold text-cyan-800 mb-6 font-[Rosario]">Our Sri Lankan Journey</h2>
                                 <div>
                                     <p className="text-[17px] xs:text-[15px] text-gray-700 mb-6">
-                                        Founded in 2016, ABC Travels began as a small family-run business in Colombo with a passion for sharing Sri Lanka's hidden gems. What started with just three employees offering local tours has grown into one of Sri Lanka's most trusted travel agencies.
+                                        Founded in 2016, TourINlanka began as a small family-run business in Colombo with a passion for sharing Sri Lanka's hidden gems. What started with just three employees offering local tours has grown into one of Sri Lanka's most trusted travel agencies.
                                     </p>
                                     <p className="text-[17px] xs:text-[15px] text-gray-700">
                                         We specialize in authentic experiences - from tea plantation stays in Nuwara Eliya to leopard safaris in Yala, and everything in between.
@@ -153,7 +153,7 @@ const About = () => {
                                         <FaEnvelope className="text-cyan-300 mt-1 mr-4" />
                                         <div>
                                             <h3 className="font-semibold text-[17px]">Email</h3>
-                                            <p className="text-cyan-200 text-[16px]">bookings@abctravels.lk</p>
+                                            <p className="text-cyan-200 text-[16px]">tourinlanka@gmail.com</p>
                                         </div>
                                     </div>
 
