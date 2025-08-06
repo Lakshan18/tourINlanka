@@ -4,6 +4,8 @@
     "title": "Cultural Tour",
     "description": "Immerse yourself in Sri Lanka's rich cultural heritage with visits to ancient cities, temples, and UNESCO World Heritage sites.",
     "duration": "5 Days",
+    "difficulty": "Moderate",
+    "groupSize": "2-10 people",
     "highlights": [
       "Sigiriya Rock Fortress",
       "Dambulla Cave Temple",
@@ -19,6 +21,8 @@
     "title": "ECO Tour",
     "description": "Experience Sri Lanka's breathtaking natural beauty while supporting sustainable tourism and conservation efforts.",
     "duration": "4 Days",
+    "difficulty": "Easy",
+    "groupSize": "2-8 people",
     "highlights": [
       "Sinharaja Rainforest Exploration",
       "Organic Tea Plantation Visit",
@@ -34,6 +38,8 @@
     "title": "Wildlife Tours",
     "description": "Embark on thrilling safaris to witness Sri Lanka's incredible biodiversity and majestic wildlife in their natural habitats.",
     "duration": "3 Days",
+    "difficulty": "Moderate",
+    "groupSize": "2-6 people",
     "highlights": [
       "Yala National Park Safari",
       "Udawalawe Elephant Gathering",
@@ -49,6 +55,8 @@
     "title": "Family Tour",
     "description": "Create unforgettable family memories with kid-friendly activities and comfortable travel experiences across Sri Lanka.",
     "duration": "4 Days",
+    "difficulty": "Easy",
+    "groupSize": "2-12 people",
     "highlights": [
       "Pinnawala Elephant Orphanage",
       "Turtle Hatchery Visit",
@@ -64,6 +72,8 @@
     "title": "Heritage Tour",
     "description": "Discover Sri Lanka's fascinating historical legacy through its ancient cities, colonial architecture, and living traditions.",
     "duration": "4 Days",
+    "difficulty": "Moderate",
+    "groupSize": "2-8 people",
     "highlights": [
       "Polonnaruwa Ancient City",
       "Galle Dutch Fort",
@@ -79,6 +89,8 @@
     "title": "Sri Lanka Round Tour",
     "description": "The ultimate comprehensive journey covering all highlights of Sri Lanka from cultural sites to natural wonders.",
     "duration": "7 Days",
+    "difficulty": "Challenging",
+    "groupSize": "2-12 people",
     "highlights": [
       "Cultural Triangle Exploration",
       "Hill Country Train Journey",

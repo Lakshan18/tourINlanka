@@ -103,5 +103,86 @@ app.post('/api/send-email', async (req, res) => {
     }
 });
 
+app.post('/api/request-package', async (req, res) => {
+    const { name, email, message, package: packageName, recaptchaToken } = req.body;
+
+    try {
+        // Verify reCAPTCHA
+        const recaptchaUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
+        const recaptchaResponse = await fetch(recaptchaUrl, { method: 'POST' });
+        const recaptchaData = await recaptchaResponse.json();
+
+        if (!recaptchaData.success) {
+            return res.status(400).json({ error: 'reCAPTCHA verification failed' });
+        }
+
+        // Send package request email
+        await transporter.sendMail({
+            from: `"Package Request" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_USER,
+            subject: `New Package Inquiry: ${packageName}`,
+            html: `
+                <div style="font-family: 'Arial', sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+                <div style="background: linear-gradient(135deg, #059669 0%, #047857 100%); padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
+                    <h1 style="color: white; margin: 0; font-size: 28px;">PACKAGE INQUIRY</h1>
+                    <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0; font-size: 16px;">TourINlanka Travels - Sri Lanka</p>
+                </div>
+                <div style="padding: 30px; background: #fff; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
+                    <div style="margin-bottom: 25px;">
+                    <h2 style="color: #047857; font-size: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">Package Details</h2>
+                    <div style="margin-bottom: 15px;">
+                        <p style="font-weight: 600; margin: 0 0 5px; color: #4b5563;">Package Name</p>
+                        <p style="margin: 0; background: #f9fafb; padding: 10px; border-radius: 6px;">${packageName}</p>
+                    </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                    <h2 style="color: #047857; font-size: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">Customer Details</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div>
+                        <p style="font-weight: 600; margin: 0 0 5px; color: #4b5563;">Full Name</p>
+                        <p style="margin: 0; background: #f9fafb; padding: 10px; border-radius: 6px;">${name}</p>
+                        </div>
+                        <div>
+                        <p style="font-weight: 600; margin: 0 0 5px; color: #4b5563;">Email</p>
+                        <p style="margin: 0; background: #f9fafb; padding: 10px; border-radius: 6px;">
+                            <a href="mailto:${email}" style="color: #3b82f6; text-decoration: none;">${email}</a>
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <div>
+                    <h2 style="color: #047857; font-size: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 15px;">Customer Message</h2>
+                    <div style="background: #f9fafb; padding: 15px; border-radius: 6px; border-left: 4px solid #059669;">
+                        <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${message}</p>
+                    </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                    <a href="mailto:${email}" style="display: inline-block; background: #059669; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s;">
+                        Reply to ${name.split(' ')[0]}
+                    </a>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 20px; color: #6b7280; font-size: 12px;">
+                    <p>This inquiry was submitted from your website package request form.</p>
+                    <p>© ${new Date().getFullYear()} TourINlanka Travels. All rights reserved.</p>
+                </div>
+                </div>
+            `
+        });
+
+        return res.status(200).json({ success: true });
+
+    } catch (error) {
+        console.error('Server Error:', error);
+        return res.status(500).json({
+            error: 'Failed to send package request',
+            details: error.message
+        });
+    }
+});
+
 const PORT = process.env.PORT || 2025;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

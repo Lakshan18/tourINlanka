@@ -17,16 +17,6 @@ const Main6thSection = () => {
   const [submitError, setSubmitError] = useState(null);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const recaptchaRef = useRef();
-  // const [isMobile, setIsMobile] = useState(false);
-
-  // useEffect(() => {
-  //   const checkMobile = () => {
-  //     setIsMobile(window.innerWidth <= 768);
-  //   };
-  //   checkMobile();
-  //   window.addEventListener('resize', checkMobile);
-  //   return () => window.removeEventListener('resize', checkMobile);
-  // }, []);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -39,53 +29,6 @@ const Main6thSection = () => {
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken(token);
   };
-
-
-  //   const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!recaptchaToken) {
-  //     alert("Please complete the reCAPTCHA verification!");
-  //     return;
-  //   }
-
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/send-email`, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         ...formData,
-  //         recaptchaToken
-  //       })
-  //     });
-
-  //     const result = await response.json();
-
-  //     if (!response.ok) {
-  //       throw new Error(result.error || 'Request failed');
-  //     }
-
-  //     // Success case
-  //     setFormData({
-  //       name: '',
-  //       email: '',
-  //       mobile: '',
-  //       travelers: '1-2',
-  //       message: ''
-  //     });
-  //     recaptchaRef.current.reset();
-  //     setRecaptchaToken(null);
-  //     setSubmitSuccess(true);
-
-  //   } catch (error) {
-  //     console.error('Submission Error:', error);
-  //     alert(`Error: ${error.message || 'Something went wrong'}`);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
 
 
   const handleSubmit = async (e) => {
@@ -143,52 +86,6 @@ const Main6thSection = () => {
       }
     }
   };
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!recaptchaToken) {
-  //     alert("Please complete the reCAPTCHA verification!");
-  //     return;
-  //   }
-
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/send-email`, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         ...formData,
-  //         recaptchaToken
-  //       })
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (!response.ok) {
-  //       throw new Error(data.error || 'Failed to send');
-  //     }
-
-  //     setSubmitSuccess(true);
-  //     setFormData({
-  //       name: '',
-  //       email: '',
-  //       mobile: '',
-  //       travelers: '1-2',
-  //       message: ''
-  //     });
-  //     recaptchaRef.current.reset();
-  //     setRecaptchaToken(null);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     alert(error.message);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //     setTimeout(() => setSubmitSuccess(false), 3000);
-  //   }
-  // };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -396,7 +293,7 @@ const Main6thSection = () => {
                       Processing...
                     </span>
                   ) : (
-                    "Request Custom Itinerary"
+                    "Request Tour"
                   )}
                 </span>
                 <span className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-cyan-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>

@@ -1,16 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTourPackageImages } from '../util/imageFinder.js';
 import tourPackages from '../data/tour_packages.json';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import { style } from '../style.js';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Packages = () => {
     const [packages, setPackages] = useState([]);
     const [selectedPackage, setSelectedPackage] = useState(null);
+    const [showFormModal, setShowFormModal] = useState(false);
     const [loading, setLoading] = useState(true);
     const [imageLoadErrors, setImageLoadErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
+    const [recaptchaToken, setRecaptchaToken] = useState(null);
+    const recaptchaRef = useRef();
+
+    const [emailForm, setEmailForm] = useState({
+        name: '',
+        email: '',
+        message: '',
+        package: ''
+    });
+
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     useEffect(() => {
         const loadPackages = async () => {
@@ -37,6 +53,83 @@ const Packages = () => {
 
     const handleImageError = (key) => {
         setImageLoadErrors(prev => ({ ...prev, [key]: true }));
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setEmailForm(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleRecaptchaChange = (token) => {
+        setRecaptchaToken(token);
+    };
+
+    const handlePackageRequestSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitError(null);
+        setSubmitSuccess(false);
+
+        if (!recaptchaToken) {
+            setSubmitError("Please complete the reCAPTCHA verification!");
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/request-package`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: emailForm.name,
+                    email: emailForm.email,
+                    message: emailForm.message,
+                    package: selectedPackage.title,
+                    recaptchaToken
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Request failed');
+            }
+
+            // Success case
+            setEmailForm({
+                name: '',
+                email: '',
+                message: '',
+                package: ''
+            });
+            recaptchaRef.current.reset();
+            setRecaptchaToken(null);
+            setSubmitSuccess(true);
+
+            setTimeout(() => {
+                setSubmitSuccess(false);
+                setShowFormModal(false);
+            }, 5000);
+
+        } catch (error) {
+            console.error('Submission Error:', error);
+            setSubmitError(error.message || 'Something went wrong');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const openFormModal = () => {
+        setEmailForm(prev => ({
+            ...prev,
+            package: selectedPackage.title
+        }));
+        setShowFormModal(true);
+        setSubmitError(null);
+        setSubmitSuccess(false);
     };
 
     const containerVariants = {
@@ -150,6 +243,7 @@ const Packages = () => {
                         ))}
                     </motion.div>
 
+                    {/* Package Details Modal */}
                     <AnimatePresence>
                         {selectedPackage && (
                             <motion.div
@@ -164,24 +258,31 @@ const Packages = () => {
                                     exit={{ scale: 0.95 }}
                                     className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
                                 >
+                                    {/* Close Button - Correctly positioned in modal header */}
+                                    <div className="sticky top-0 z-50 w-full h-0">
+                                        <button
+                                            onClick={() => {
+                                                setSelectedPackage(null);
+                                                setSubmitSuccess(false);
+                                            }}
+                                            className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors shadow-lg"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
 
-                                    <div className="relative h-64 md:h-80 overflow-hidden">
+                                    {/* Image Section - No top spacing */}
+                                    <div className="relative w-full h-[50vh] overflow-hidden">
                                         <img
                                             src={selectedPackage.images.main}
                                             alt={selectedPackage.title}
-                                            className="w-full h-full object-cover"
+                                            className="absolute inset-0 w-full h-full object-cover"
                                             onError={(e) => {
                                                 e.target.src = '/images/placeholder-bg.jpg';
                                             }}
                                         />
-                                        <button
-                                            onClick={() => setSelectedPackage(null)}
-                                            className="absolute top-4 right-4 bg-white/80 rounded-full p-2 hover:bg-white transition-colors z-10"
-                                        >
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </button>
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                                             <div>
                                                 <h2 className="text-3xl font-bold text-white">{selectedPackage.title}</h2>
@@ -213,9 +314,16 @@ const Packages = () => {
                                                         </motion.li>
                                                     ))}
                                                 </ul>
+
+                                                <button
+                                                    onClick={openFormModal}
+                                                    className="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-lg font-medium transition-colors"
+                                                >
+                                                    Request Information
+                                                </button>
                                             </div>
 
-                                            <div className="bg-blue-50 rounded-xl p-6 h-fit">
+                                            <div className="bg-blue-50 rounded-xl p-6 h-fit sticky top-4">
                                                 <h3 className="text-xl font-semibold text-gray-800 mb-4">Tour Details</h3>
                                                 <div className="space-y-4">
                                                     <div>
@@ -224,21 +332,13 @@ const Packages = () => {
                                                     </div>
                                                     <div>
                                                         <h4 className="text-sm font-medium text-gray-500">Difficulty</h4>
-                                                        <p className="text-gray-800">Moderate</p>
+                                                        <p className="text-gray-800">{selectedPackage.difficulty}</p>
                                                     </div>
                                                     <div>
                                                         <h4 className="text-sm font-medium text-gray-500">Group Size</h4>
-                                                        <p className="text-gray-800">2-12 people</p>
-                                                    </div>
-                                                    <div>
-                                                        <h4 className="text-sm font-medium text-gray-500">Price From</h4>
-                                                        <p className="text-2xl font-bold text-blue-600">$299</p>
+                                                        <p className="text-gray-800">{selectedPackage.groupSize}</p>
                                                     </div>
                                                 </div>
-
-                                                <button className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors">
-                                                    Book This Tour
-                                                </button>
 
                                                 <div className="mt-6 pt-6 border-t border-blue-100">
                                                     <h4 className="text-sm font-medium text-gray-500 mb-3">Share this tour</h4>
@@ -264,6 +364,116 @@ const Packages = () => {
                                             </div>
                                         </div>
                                     </div>
+                                </motion.div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Form Modal */}
+                    <AnimatePresence>
+                        {showFormModal && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+                            >
+                                <motion.div
+                                    initial={{ scale: 0.95, y: 20 }}
+                                    animate={{ scale: 1, y: 0 }}
+                                    exit={{ scale: 0.95, y: 20 }}
+                                    className="bg-white rounded-xl max-w-md w-full p-6 relative"
+                                >
+                                    <button
+                                        onClick={() => setShowFormModal(false)}
+                                        className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors z-50 shadow-md"
+                                    >
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+
+                                    <h3 className="text-2xl font-semibold text-gray-800 mb-6">Request Information</h3>
+                                    <p className="text-gray-600 mb-6">We'll get back to you with details about the {selectedPackage?.title} package.</p>
+
+                                    {submitSuccess ? (
+                                        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                                            <p>Thank you! Your request has been submitted. We'll contact you shortly.</p>
+                                        </div>
+                                    ) : (
+                                        <form onSubmit={handlePackageRequestSubmit}>
+                                            <div className="mb-4">
+                                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                                <input
+                                                    type="text"
+                                                    id="name"
+                                                    name="name"
+                                                    value={emailForm.name}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                />
+                                            </div>
+                                            <div className="mb-4">
+                                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    value={emailForm.email}
+                                                    onChange={handleInputChange}
+                                                    required
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                />
+                                            </div>
+                                            <div className="mb-6">
+                                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Your Message</label>
+                                                <textarea
+                                                    id="message"
+                                                    name="message"
+                                                    value={emailForm.message}
+                                                    onChange={handleInputChange}
+                                                    rows="4"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                    required
+                                                    placeholder={`I'm interested in the ${selectedPackage?.title} package. Please send me more details.`}
+                                                ></textarea>
+                                            </div>
+
+                                            <div className="mb-6">
+                                                <ReCAPTCHA
+                                                    ref={recaptchaRef}
+                                                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                                                    onChange={handleRecaptchaChange}
+                                                    size="normal"
+                                                />
+                                            </div>
+
+                                            {submitError && (
+                                                <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                                                    {submitError}
+                                                </div>
+                                            )}
+
+                                            <button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                {isSubmitting ? (
+                                                    <span className="flex items-center justify-center">
+                                                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                        </svg>
+                                                        Processing...
+                                                    </span>
+                                                ) : (
+                                                    'Submit Request'
+                                                )}
+                                            </button>
+                                        </form>
+                                    )}
                                 </motion.div>
                             </motion.div>
                         )}
