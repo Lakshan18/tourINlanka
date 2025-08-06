@@ -8,6 +8,7 @@ import Main5thSection from '../sections/Main5thSection.jsx';
 import Main6thSection from '../sections/Main6thSection.jsx';
 import Main7thSection from '../sections/Main7thSection.jsx';
 import Footer from '../components/Footer.jsx';
+import BackToTop from '../components/BackToTop.jsx';
 
 const Home = () => {
     return (
@@ -27,6 +28,7 @@ const Home = () => {
             <Main6thSection/>
             <Main7thSection/>
             <Footer/>
+            <BackToTop/>
         </div>
     );
 }

@@ -108,6 +108,16 @@ const MainHero = () => {
     };
   }, [isMobileView]);
 
+
+  const handleExploreClick = () => {
+    const scrollDistance = window.innerHeight;
+
+    window.scrollTo({
+      top: scrollDistance,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section
       ref={heroRef}
@@ -163,6 +173,7 @@ const MainHero = () => {
           <div className="flex flex-col sm:flex-row gap-3 xs:gap-4 justify-center">
             <button
               ref={exploreBtnRef}
+              onClick={handleExploreClick}
               className="bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-full transition-all hover:scale-105 shadow-lg flex items-center gap-2 mx-auto group xs:text-[12px] sm:text-[14px] lg:text-[16px] text-[18px] sm:py-3 sm:px-4 xs:py-2 xs:px-3 py-2 px-5"
             >
               Explore Sri Lanka
