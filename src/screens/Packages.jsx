@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getTourPackageImages } from '../util/imageFinder.js';
-import tourPackages from '../data/tour_packages.json';
+import tourPackagesData from '../data/tour_packages.json';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import { style } from '../style.js';
 import ReCAPTCHA from "react-google-recaptcha";
+import LoadingBuff from '../components/LoadingBuff.jsx';
 
 const Packages = () => {
     const [packages, setPackages] = useState([]);
@@ -29,26 +29,12 @@ const Packages = () => {
     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     useEffect(() => {
-        const loadPackages = async () => {
-            try {
-                const packagesWithImages = await Promise.all(
-                    tourPackages.map(async pkg => {
-                        const images = await getTourPackageImages(pkg.key);
-                        return {
-                            ...pkg,
-                            images
-                        };
-                    })
-                );
-                setPackages(packagesWithImages);
-            } catch (error) {
-                console.error('Error loading packages:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+        const timer = setInterval(() => {
+            setLoading(false);
+            setPackages(tourPackagesData);
+        }, 2400);
 
-        loadPackages();
+        return () => setTimeout(timer);
     }, []);
 
     const handleImageError = (key) => {
@@ -98,7 +84,6 @@ const Packages = () => {
                 throw new Error(result.error || 'Request failed');
             }
 
-            // Success case
             setEmailForm({
                 name: '',
                 email: '',
@@ -157,15 +142,7 @@ const Packages = () => {
     };
 
     if (loading) {
-        return (
-            <div className="flex justify-center items-center h-screen">
-                <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"
-                />
-            </div>
-        );
+        return <LoadingBuff />
     }
 
     return (
@@ -174,7 +151,6 @@ const Packages = () => {
 
             <div className="pt-28 bg-gradient-to-b from-slate-700 to-slate-500 pb-12 pt-30 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
-
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -209,7 +185,7 @@ const Packages = () => {
                                         </div>
                                     ) : (
                                         <motion.img
-                                            src={pkg.images.thumbnail}
+                                            src={pkg.thumbnail}
                                             alt={pkg.title}
                                             className="w-full h-full object-cover"
                                             initial={{ opacity: 0.9 }}
@@ -243,7 +219,6 @@ const Packages = () => {
                         ))}
                     </motion.div>
 
-                    {/* Package Details Modal */}
                     <AnimatePresence>
                         {selectedPackage && (
                             <motion.div
@@ -258,7 +233,6 @@ const Packages = () => {
                                     exit={{ scale: 0.95 }}
                                     className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
                                 >
-                                    {/* Close Button - Correctly positioned in modal header */}
                                     <div className="sticky top-0 z-50 w-full h-0">
                                         <button
                                             onClick={() => {
@@ -273,10 +247,9 @@ const Packages = () => {
                                         </button>
                                     </div>
 
-                                    {/* Image Section - No top spacing */}
                                     <div className="relative w-full h-[50vh] overflow-hidden">
                                         <img
-                                            src={selectedPackage.images.main}
+                                            src={selectedPackage.mainImage}
                                             alt={selectedPackage.title}
                                             className="absolute inset-0 w-full h-full object-cover"
                                             onError={(e) => {
@@ -369,7 +342,6 @@ const Packages = () => {
                         )}
                     </AnimatePresence>
 
-                    {/* Form Modal */}
                     <AnimatePresence>
                         {showFormModal && (
                             <motion.div

@@ -14,7 +14,9 @@
       "Traditional Kandyan Dance Show"
     ],
     "icon": "https://cdn-icons-png.flaticon.com/512/3132/3132693.png",
-    "key": "cultural_tour"
+    "key": "cultural_tour",
+    "mainImage": "/images/tours/cultural_tour.jpg",
+    "thumbnail": "/images/tours/cultural_tour_thumb.jpg"
   },
   {
     "id": 2,
@@ -31,7 +33,9 @@
       "Eco-friendly Beach Cleanup"
     ],
     "icon": "https://cdn-icons-png.flaticon.com/512/4849/4849878.png",
-    "key": "eco_tour"
+    "key": "eco_tour",
+    "mainImage": "/images/tours/eco_tour.jpg",
+    "thumbnail": "/images/tours/eco_tour_thumb.jpg"
   },
   {
     "id": 3,
@@ -48,7 +52,9 @@
       "Night Safari Experience"
     ],
     "icon": "https://cdn-icons-png.flaticon.com/512/6169/6169852.png",
-    "key": "wildlife_tour"
+    "key": "wildlife_tour",
+    "mainImage": "/images/tours/wildlife_tour.png",
+    "thumbnail": "/images/tours/wildlife_tour_thumb.png"
   },
   {
     "id": 4,
@@ -65,7 +71,9 @@
       "Child-friendly Cultural Shows"
     ],
     "icon": "https://cdn-icons-png.flaticon.com/512/477/477103.png",
-    "key": "family_tour"
+    "key": "family_tour",
+    "mainImage": "/images/tours/family_tour.jpg",
+    "thumbnail": "/images/tours/family_tour_thumb.jpg"
   },
   {
     "id": 5,
@@ -82,7 +90,9 @@
       "Traditional Craft Villages"
     ],
     "icon": "https://cdn-icons-png.flaticon.com/512/3132/3132693.png",
-    "key": "heritage_tour"
+    "key": "heritage_tour",
+    "mainImage": "/images/tours/heritage_tour.jpg",
+    "thumbnail": "/images/tours/heritage_tour_thumb.jpg"
   },
   {
     "id": 6,
@@ -99,6 +109,8 @@
       "Local Market Visits"
     ],
     "icon": "https://cdn-icons-png.flaticon.com/512/854/854878.png",
-    "key": "round_tour"
+    "key": "round_tour",
+    "mainImage": "/images/tours/round_tour.jpg",
+    "thumbnail": "/images/tours/round_tour_thumb.jpg"
   }
 ]

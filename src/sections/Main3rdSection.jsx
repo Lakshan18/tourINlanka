@@ -1,7 +1,6 @@
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { style } from "../style.js";
 import { useRef, useState, useEffect } from 'react';
-import { getActivityImages } from '../util/imageFinder.js';
+import { style } from "../style.js";
 
 const rowAnimations = {
   container: {
@@ -22,42 +21,72 @@ const activitiesData = [
     "key": "wildlife",
     "title": "Wildlife Safaris",
     "description": "Spot leopards & elephants in Yala and Udawalawe national parks",
-    "color": "from-amber-900/50 to-amber-700/50"
+    "color": "from-amber-900/50 to-amber-700/50",
+    "images": {
+      "image1": "/images/activities/wildlife_1.webp",
+      "image2": "/images/activities/wildlife_2.webp",
+      "image3": "/images/activities/wildlife_3.jpg"
+    }
   },
   {
     "id": 2,
     "key": "temple",
     "title": "Ancient Temple Exploration",
     "description": "Discover 2000+ year old Buddhist temples and cave paintings",
-    "color": "from-stone-900/50 to-stone-700/50"
+    "color": "from-stone-900/50 to-stone-700/50",
+    "images": {
+      "image1": "/images/activities/temple_1.jpg",
+      "image2": "/images/activities/temple_2.jpg",
+      "image3": "/images/activities/temple_3.webp"
+    }
   },
   {
     "id": 3,
     "key": "tea",
     "title": "Tea Plantation Tours",
     "description": "Walk through emerald green tea estates in Nuwara Eliya",
-    "color": "from-green-900/50 to-green-700/50"
+    "color": "from-green-900/50 to-green-700/50",
+    "images": {
+      "image1": "/images/activities/tea_1.webp",
+      "image2": "/images/activities/tea_2.jpg",
+      "image3": "/images/activities/tea_3.jpg"
+    }
   },
   {
     "id": 4,
     "key": "beach",
     "title": "Beach Relaxation",
     "description": "Unwind on pristine golden beaches along the southern coast",
-    "color": "from-blue-900/50 to-blue-700/50"
+    "color": "from-blue-900/50 to-blue-700/50",
+    "images": {
+      "image1": "/images/activities/beach_1.webp",
+      "image2": "/images/activities/beach_2.jpg",
+      "image3": "/images/activities/beach_3.jpg"
+    }
   },
   {
     "id": 5,
     "key": "spice",
     "title": "Spice Garden Visits",
     "description": "Learn about cinnamon, pepper and other native spices",
-    "color": "from-red-900/50 to-red-700/50"
+    "color": "from-red-900/50 to-red-700/50",
+    "images": {
+      "image1": "/images/activities/spice_1.webp",
+      "image2": "/images/activities/spice_2.jpg",
+      "image3": "/images/activities/spice_3.webp"
+    }
   },
   {
     "id": 6,
     "key": "train",
     "title": "Train Journeys",
     "description": "Experience the famous Kandy to Ella scenic train ride",
-    "color": "from-purple-900/50 to-purple-700/50"
+    "color": "from-purple-900/50 to-purple-700/50",
+    "images": {
+      "image1": "/images/activities/train_1.webp",
+      "image2": "/images/activities/train_2.jpg",
+      "image3": "/images/activities/train_3.webp"
+    }
   }
 ];
 
@@ -126,66 +155,88 @@ const imageVariants = {
 const Main3rdSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
-  const [activities, setActivities] = useState([]);
   const [currentImageIndices, setCurrentImageIndices] = useState({});
   const [hasLoaded, setHasLoaded] = useState(false);
-  const timeoutRef = useRef(null);
-  // const currentTransitionIndex = useRef(0);
+  const timeoutRefs = useRef([]);
 
   useEffect(() => {
-    const loadActivityImages = async () => {
-      const loadedActivities = await Promise.all(
-        activitiesData.map(async (activity) => {
-          const images = await getActivityImages(activity.key);
-          return { ...activity, images };
-        })
-      );
-      setActivities(loadedActivities);
-
-      const indices = {};
-      activitiesData.forEach((_, index) => {
-        indices[index] = 0;
-      });
-      setCurrentImageIndices(indices);
-      setHasLoaded(true);
-    };
-
-    loadActivityImages();
+    const initialIndices = {};
+    activitiesData.forEach((_, index) => {
+      initialIndices[index] = 0;
+    });
+    setCurrentImageIndices(initialIndices);
+    setHasLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (!hasLoaded) return;
+    if (!hasLoaded || !isInView) return;
 
-    const transitionNextCard = () => {
-      // Create shuffled array of card indices
-      const cardIndices = [...Array(activities.length).keys()];
-      for (let i = cardIndices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [cardIndices[i], cardIndices[j]] = [cardIndices[j], cardIndices[i]];
+    timeoutRefs.current.forEach(clearTimeout);
+    timeoutRefs.current = [];
+
+    const preloadImages = () => {
+      activitiesData.forEach(activity => {
+        Object.values(activity.images).forEach(src => {
+          const img = new Image();
+          img.src = src;
+        });
+      });
+    };
+    preloadImages();
+
+    const transitionConfig = [
+      {
+        round: 1,
+        order: [2, 4, 1, 6, 3, 5], 
+        imageIndex: 0
+      },
+      {
+        round: 2,
+        order: [4, 1, 6, 3, 2, 5], 
+        imageIndex: 1
+      },
+      {
+        round: 3,
+        order: [6, 3, 5, 2, 4, 1],
+        imageIndex: 2
       }
+    ];
 
-      // Process each card one by one with 4000ms delay
-      cardIndices.forEach((cardIndex, i) => {
-        timeoutRef.current = setTimeout(() => {
-          setCurrentImageIndices(prev => ({
-            ...prev,
-            [cardIndex]: (prev[cardIndex] + 1) % 2
-          }));
-        }, i * 3000);
+    const transitionDuration = 3000;
+    const roundDelay = 2000;
+
+    const startAnimationRound = (roundIndex) => {
+      const config = transitionConfig[roundIndex % transitionConfig.length];
+
+      console.log(`Starting round ${config.round} with order:`, config.order);
+
+      config.order.forEach((cardId, i) => {
+        const timeoutId = setTimeout(() => {
+          const cardIndex = activitiesData.findIndex(item => item.id === cardId);
+          if (cardIndex !== -1) {
+            setCurrentImageIndices(prev => ({
+              ...prev,
+              [cardIndex]: config.imageIndex
+            }));
+          }
+        }, i * transitionDuration);
+
+        timeoutRefs.current.push(timeoutId);
       });
 
-      // Schedule next round after all cards have transitioned
-      const totalTransitionTime = cardIndices.length * 2200;
-      timeoutRef.current = setTimeout(transitionNextCard, totalTransitionTime);
+      const nextRoundTimeout = setTimeout(() => {
+        startAnimationRound(roundIndex + 1);
+      }, (config.order.length * transitionDuration) + roundDelay);
+
+      timeoutRefs.current.push(nextRoundTimeout);
     };
 
-    // Start the transition cycle
-    transitionNextCard();
+    startAnimationRound(0);
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRefs.current.forEach(clearTimeout);
     };
-  }, [hasLoaded, activities.length]);
+  }, [hasLoaded, isInView]);
 
   const getAnimationType = (index) => {
     const types = ['tween', 'bounce', 'slide', 'wave'];
@@ -204,7 +255,7 @@ const Main3rdSection = () => {
           <h2 className={`${style.mainTitleText} mb-6`}>
             Best Activities to do in Sri Lanka
           </h2>
-          <p className={`${style.sectionSubText} xl:max-w-4xl sm:max-w-[500px] xs:max-w-[320px] mx-auto tracking-wider`}>
+          <p className={`${style.sectionSubText} 2xl:max-w-4xl xl:max-w-4xl sm:max-w-[500px] xs:max-w-[320px] mx-auto tracking-wider`}>
             Discover unforgettable experiences that showcase Sri Lanka's diverse culture and natural beauty
           </p>
         </motion.div>
@@ -215,7 +266,7 @@ const Main3rdSection = () => {
           initial="hidden"
           animate={isInView && hasLoaded ? "visible" : "hidden"}
         >
-          {activities.map((activity, index) => (
+          {activitiesData.map((activity, index) => (
             <motion.div
               key={activity.id}
               variants={cardAnimations[getAnimationType(index)]}
@@ -227,16 +278,16 @@ const Main3rdSection = () => {
                   {[1, 2, 3].map((i) => (
                     currentImageIndices[index] === i - 1 && (
                       <motion.div
-                        key={`${activity.id}-${i}`}
+                        key={`${activity.id}-${i}-${currentImageIndices[index]}`}
                         className="absolute inset-0 bg-cover bg-center"
                         style={{
-                          backgroundImage: `url(${activity.images?.[`image${i}`] || '/images/placeholder-bg.jpg'})`
+                          backgroundImage: `url(${activity.images[`image${i}`]})`
                         }}
                         initial="enter"
                         animate="center"
                         exit="exit"
                         variants={imageVariants}
-                        transition={{ duration: 1.2 }}
+                        transition={{ duration: 1.5 }}
                       />
                     )
                   ))}

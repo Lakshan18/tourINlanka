@@ -4,12 +4,29 @@ import { BiLeaf } from 'react-icons/bi';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import { style } from '../style.js';
+import { useEffect, useState } from 'react';
+import LoadingBuff from '../components/LoadingBuff.jsx';
 
 const About = () => {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setLoading(false);
+        }, 2400);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+
     const fadeIn = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 }
     };
+
+    if (loading) {
+        return <LoadingBuff />
+    }
 
     return (
         <div className='relative'>

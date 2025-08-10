@@ -121,7 +121,7 @@ const MainHero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative w-full h-full bg-[url('../public/mountains.jpg')] bg-cover bg-center bg-no-repeat"
+      className="relative w-full h-full bg-[url('../public/bg_hero_img.webp')] bg-cover bg-center bg-no-repeat"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black/35 to-black/45 z-0"></div>
 
