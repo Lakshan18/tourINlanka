@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaTripadvisor } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaTripadvisor } from 'react-icons/fa';
 import { BiLeaf } from 'react-icons/bi';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
