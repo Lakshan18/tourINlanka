@@ -316,7 +316,7 @@ const Packages = () => {
                                                 <div className="mt-6 pt-6 border-t border-blue-100">
                                                     <h4 className="text-sm font-medium text-gray-500 mb-3">Share this tour</h4>
                                                     <div className="flex space-x-4">
-                                                        {['facebook', 'twitter', 'instagram', 'whatsapp'].map((social) => (
+                                                        {['facebook', 'instagram', 'whatsapp'].map((social) => (
                                                             <button
                                                                 key={social}
                                                                 className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm hover:shadow-md transition-shadow"

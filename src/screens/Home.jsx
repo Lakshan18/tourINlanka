@@ -19,7 +19,7 @@ const Home = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             setLoading(false);
-        }, 5000);
+        }, 2400);
 
         return () => setTimeout(timer);
     }, []);
