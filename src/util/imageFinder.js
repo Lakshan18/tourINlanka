@@ -1,13 +1,33 @@
 const extensions = ['.webp', '.jpg', '.jpeg', '.png'];
 
-const checkImageExists = async (path) => {
+
+const imageCache = new Map();
+
+// const checkImageExists = async (path) => {
+//   return new Promise((resolve) => {
+//     const img = new Image();
+//     img.onload = () => resolve(path);
+//     img.onerror = () => resolve(null);
+//     img.src = path;
+//   });
+// };
+
+
+const checkImageExists = (path) => {
   return new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve(path);
     img.onerror = () => resolve(null);
+    // Set timeout to prevent hanging
+    const timer = setTimeout(() => resolve(null), 1000);
+    img.onload = img.onerror = () => {
+      clearTimeout(timer);
+      resolve(img.complete && img.naturalWidth !== 0 ? path : null);
+    };
     img.src = path;
   });
 };
+
 
 export const getDestinationImages = async (key) => {
   const images = {
@@ -54,28 +74,34 @@ export const getActivityImages = async (key) => {
 };
 
 export const getTourPackageImages = async (key) => {
+  // Check cache first
+  const cacheKey = `tour-${key}`;
+  if (imageCache.has(cacheKey)) {
+    return imageCache.get(cacheKey);
+  }
+
   const images = {
     main: '/images/placeholder-bg.jpg',
     thumbnail: '/images/placeholder-card.jpg'
   };
 
-  for (const ext of extensions) {
-    const mainPath = `/images/tours/${key}${ext}`;
-    const exists = await checkImageExists(mainPath);
-    if (exists) {
-      images.main = exists;
-      break;
-    }
-  }
+  // Try all extensions in parallel for main image
+  const mainPromises = extensions.map(ext =>
+    checkImageExists(`/images/tours/${key}${ext}`)
+  );
+  const mainResults = await Promise.all(mainPromises);
+  const foundMain = mainResults.find(result => result !== null);
+  if (foundMain) images.main = foundMain;
 
-  for (const ext of extensions) {
-    const thumbPath = `/images/tours/${key}_thumb${ext}`;
-    const exists = await checkImageExists(thumbPath);
-    if (exists) {
-      images.thumbnail = exists;
-      break;
-    }
-  }
+  // Try all extensions in parallel for thumbnail
+  const thumbPromises = extensions.map(ext =>
+    checkImageExists(`/images/tours/${key}_thumb${ext}`)
+  );
+  const thumbResults = await Promise.all(thumbPromises);
+  const foundThumb = thumbResults.find(result => result !== null);
+  if (foundThumb) images.thumbnail = foundThumb;
 
+  // Cache the result
+  imageCache.set(cacheKey, images);
   return images;
 };
