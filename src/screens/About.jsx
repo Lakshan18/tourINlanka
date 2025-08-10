@@ -138,14 +138,14 @@ const About = () => {
                     >
                         <div className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1">
                             <div className="bg-cyan-700 text-white p-12">
-                                <h2 className="font-bold mb-8 text-[30px] xs:text-[28px] font-[Roboto]">Contact TripLanka</h2>
+                                <h2 className="font-bold mb-8 text-[30px] xs:text-[28px] font-[Roboto]">Contact TourINlanka</h2>
 
                                 <div className="space-y-6">
                                     <div className="flex items-start">
                                         <FaPhone className="text-cyan-300 mt-1 mr-4" />
                                         <div>
                                             <h3 className="font-semibold text-[17px]">Phone (Sri Lanka)</h3>
-                                            <p className="text-cyan-200 text-[16px]">+94 76 123 4567</p>
+                                            <p className="text-cyan-200 text-[16px]">(+94)76 218 9803</p>
                                         </div>
                                     </div>
 
@@ -153,17 +153,17 @@ const About = () => {
                                         <FaEnvelope className="text-cyan-300 mt-1 mr-4" />
                                         <div>
                                             <h3 className="font-semibold text-[17px]">Email</h3>
-                                            <p className="text-cyan-200 text-[16px]">tourinlanka@gmail.com</p>
+                                            <p className="text-cyan-200 text-[16px]">tourinlankaofficial@gmail.com</p>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-start">
+                                    {/* <div className="flex items-start">
                                         <FaMapMarkerAlt className="text-cyan-300 mt-1 mr-4" />
                                         <div>
                                             <h3 className="font-semibold text-[17px]">Office</h3>
                                             <p className="text-cyan-200 text-[16px]">123 Galle Road, Colombo 03, Sri Lanka</p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 <div className="mt-12">
